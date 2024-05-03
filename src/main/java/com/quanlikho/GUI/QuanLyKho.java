@@ -33,7 +33,7 @@ public class QuanLyKho extends JFrame {
 	private JPanel Paneldangxuat;
 	private JPanel Paneldoithongtin;
 	private JPanel MainContent;
-	private NhaCungCap nhaCungCap;
+	private PhanLoai phanLoai;
 	private SanPham sanPham;
 	private NhapHang nhapHang;
 	private PhieuNhap phieuNhap;
@@ -435,8 +435,8 @@ public class QuanLyKho extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		MainContent.removeAll();
-		nhaCungCap = new NhaCungCap();
-		MainContent.add(nhaCungCap).setVisible(true);
+		phanLoai = new PhanLoai();
+		MainContent.add(phanLoai).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
 
@@ -445,8 +445,8 @@ public class QuanLyKho extends JFrame {
 	public void NhaCungCapMouseClicked(MouseEvent evt) {
 		// TODO add your handling code here:
 		MainContent.removeAll();
-		nhaCungCap = new NhaCungCap();
-		MainContent.add(nhaCungCap).setVisible(true);
+		phanLoai = new PhanLoai();
+		MainContent.add(phanLoai).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
 	}

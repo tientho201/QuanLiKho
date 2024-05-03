@@ -17,10 +17,10 @@ CREATE TABLE Account (
 );
 
 INSERT INTO Account (TenDangNhap, HovaTen, Email, Password, Role, Enable) VALUES
-('admin', N'Họ và Tên 1', NULL, '123', 'Admin', 1),
-('nhaphang', N'Họ và Tên 2', NULL, '123', 'NhapHang', 1),
-('xuathang', N'Họ và Tên 3', NULL, '123', 'XuatHang', 1),
-('QLK', N'Họ và Tên 4', NULL, '123', 'QuanLyKho', 1);
+('admin', N'Họ và Tên 1', N'', '123', 'Admin', 1),
+('nhaphang', N'Họ và Tên 2', N'', '123', 'NhapHang', 1),
+('xuathang', N'Họ và Tên 3', N'', '123', 'XuatHang', 1),
+('QLK', N'Họ và Tên 4', N'', '123', 'QuanLyKho', 1);
 
 CREATE TABLE NhaCungCap(
     MaNCC VARCHAR(10) NOT NULL PRIMARY KEY , 
@@ -69,23 +69,23 @@ CREATE TABLE SanPham(
     TenSP NVARCHAR(100) NOT NULL , 
     SoLuong INT NOT NULL , 
     Gia INT NOT NULL , 
-    NgaySanXuat DATETIME NOT NULL , 
     MaLoai VARCHAR(10) NOT NULL ,
     MaNSX VARCHAR(10) NOT NULL , 
     GhiChu NVARCHAR(1000),
+    Enable int NOT NULL ,
     CONSTRAINT FK_SanPham_NhaSanXuat FOREIGN KEY (MaNSX) REFERENCES NhaSanXuat(MaNSX),
     CONSTRAINT FK_SanPham_Loai FOREIGN KEY (MaLoai) REFERENCES Loai(MaLoai)
 );
 
-INSERT INTO SanPham(MaSP , TenSP , SoLuong, Gia ,NgaySanXuat, MaLoai , MaNSX , GhiChu) VALUES
-('SP1', N'Đàn Piano Apollo A8',21,550300 ,'2024-02-02' ,'L1', 'NSX1', N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP2', N'Đàn Violin Antonius Braun',11,252000 , '2024-02-02' ,'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP3', N'Đàn Violin Azmusic AZV130',15,155040 ,'2024-02-02' , 'L2', 'NSX5',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP4', N'Đàn Violin Kapok V182',27,512400 , '2024-02-02' ,'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP5', N'Đàn Piano01',21,557000 ,'2024-02-02' , 'L1', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP6', N'Đàn Piano Yamaha W106',21,552000 ,'2024-02-02' , 'L1', 'NSX3',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP7', N'Đàn Violin Kapok V188',1,525000 ,'2024-02-02' , 'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-('SP8', N'Đàn Guitar Acoustic J260',31,155000 , '2024-02-02' ,'L6', 'NSX2',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...');
+INSERT INTO SanPham(MaSP , TenSP , SoLuong, Gia , MaLoai , MaNSX , GhiChu ,Enable ) VALUES
+('SP1', N'Đàn Piano Apollo A8',21,550300 ,'L1', 'NSX1', N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...' , 1),
+('SP2', N'Đàn Violin Antonius Braun',11,252000 , 'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP3', N'Đàn Violin Azmusic AZV130',15,155040 , 'L2', 'NSX5',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP4', N'Đàn Violin Kapok V182',27,512400 , 'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP5', N'Đàn Piano01',21,557000 , 'L1', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP6', N'Đàn Piano Yamaha W106',21,552000 , 'L1', 'NSX3',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP7', N'Đàn Violin Kapok V188',1,525000 , 'L2', 'NSX1',  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1),
+('SP8', N'Đàn Guitar Acoustic J260',31,155000 , 'L6', 'NSX2',   N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...', 1);
 
 CREATE TABLE PhieuNhap(
     MaPN VARCHAR(10) NOT NULL PRIMARY KEY , 
@@ -98,13 +98,9 @@ CREATE TABLE PhieuNhap(
 );
 
 INSERT INTO PhieuNhap(MaPN , MaNCC ,NgayNhap,TenDangNhap ,TongTien ) VALUES 
-('PN1' , 'NCC2' ,  '2024-03-27' , 'admin' , 45235 ),
-('PN2' , 'NCC2' ,  '2024-03-27' , 'admin' , 234324),
-('PN3' , 'NCC5' , '2024-03-27'  , 'admin',234234),
-('PN4' , 'NCC3' ,  '2024-03-27' , 'admin', 341234 ),
-('PN5' , 'NCC1' ,  '2024-03-27' , 'admin', 213123 ),
-('PN6' , 'NCC5' , '2024-03-27'  , 'admin',3123),
-('PN7' , 'NCC4' ,  '2024-03-27' , 'admin',3123 );
+('PN0001' , 'NCC2' ,  '2024-03-27' , 'admin' , 2751500 ),
+('PN0002' , 'NCC2' ,  '2024-03-27' , 'admin' , 8136500),
+('PN0003' , 'NCC5' , '2024-03-27'  , 'admin', 1260000);
 
 CREATE TABLE ChiTietPN(
     MaSP VARCHAR(10) NOT NULL, 
@@ -118,23 +114,28 @@ CREATE TABLE ChiTietPN(
 
 
 INSERT INTO ChiTietPN(MaSP , MaPN , DonGiaNhap , SoLuong   ) VALUES
-('SP1' , 'PN2' , 40000 , 5  ),
-('SP1' , 'PN1' , 10000 , 5  ),
-('SP2' , 'PN4' , 5000 , 5 ),
-('SP6' , 'PN2' , 40000 , 5  ),
-('SP7' , 'PN2' , 40000 , 5  );
+('SP1' , 'PN0001' , 550300 , 5  ),
+('SP1' , 'PN0002' , 550300 , 5  ),
+('SP6' , 'PN0002' , 552000 , 5  ),
+('SP7' , 'PN0002' , 525000 , 5  ),
+('SP2' , 'PN0003' , 252000 , 5  );
+
+
 
 CREATE TABLE DaiLi(
     MaDL VARCHAR(10) NOT NULL PRIMARY KEY,
-    TenDL NVARCHAR(100) NOT NULL,
-    SDT NVARCHAR(100) NOT NULL,
-    DiaChi NVARCHAR(100) NOT NULL
+    TenDL VARCHAR(100) NOT NULL,
+    SDT VARCHAR(100) NOT NULL,
+    DiaChi VARCHAR(100) NOT NULL,
+    Enable int NOT NULL 
 );
-INSERT INTO DaiLi(MaDL , TenDL , SDT , DiaChi ) VALUES
-('DL1' , N'Đại Lí Hà Nội' , N'0384475805' , N'Hà Nội'  ),
-('DL2' , N'Đại Lí Đà Nẵng' , N'0384475805' , N'Đà Nẵng' ),
-('DL3' , N'Đại Lí Nha Trang' ,N'0384475805' , N'Nha Trang'  ),
-('DL4' , N'Đại Lí Hồ Chí Minh' ,N'0384475805' , N'Hồ Chí Minh'  );
+INSERT INTO DaiLi(MaDL , TenDL , SDT , DiaChi , Enable ) VALUES
+('DL1' , N'Đại Lí Hà Nội' , N'0384475805' , N'Hà Nội' , 1  ),
+('DL2' , N'Đại Lí Đà Nẵng' , N'0384475805' , N'Đà Nẵng'  , 1),
+('DL3' , N'Đại Lí Nha Trang' ,N'0384475805' , N'Nha Trang' , 1  ),
+('DL4' , N'Đại Lí Hồ Chí Minh' ,N'0384475805' , N'Hồ Chí Minh' , 1   );
+
+
 CREATE TABLE PhieuXuat(
     MaPX VARCHAR(10) NOT NULL PRIMARY KEY , 
     MaNCC VARCHAR(10) NOT NULL,
@@ -148,13 +149,9 @@ CREATE TABLE PhieuXuat(
 );
 
 INSERT INTO PhieuXuat(MaPX , MaNCC ,ThoiGianTao,TenDangNhap , MaDL  , TongTien) VALUES 
-('PX1' , 'NCC2' ,  '2024-03-27' , 'admin' ,  'DL1' , 23432),
-('PX2' , 'NCC2' ,  '2024-03-27' , 'admin',  'DL3' , 1234123),
-('PX3' , 'NCC5' , '2024-03-27'  , 'admin',  'DL1' , 12312),
-('PX4' , 'NCC3' ,  '2024-03-27' , 'admin' ,  'DL2' , 13212),
-('PX5' , 'NCC1' ,  '2024-03-27' , 'admin' ,  'DL4' , 12312),
-('PX6' , 'NCC5' , '2024-03-27'  , 'admin',  'DL2' , 12312),
-('PX7' , 'NCC4' ,  '2024-03-27' , 'admin' ,  'DL1' , 123313);
+('PX1' , 'NCC2' ,  '2024-03-27' , 'admin' ,  'DL1' , 3251500),
+('PX2' , 'NCC2' ,  '2024-03-27' , 'admin',  'DL3' , 9636500),
+('PX3' , 'NCC5' , '2024-03-27'  , 'admin',  'DL1' , 3260000);
 
 CREATE TABLE ChiTietPX(
     MaSP VARCHAR(10) NOT NULL, 
@@ -167,9 +164,9 @@ CREATE TABLE ChiTietPX(
 );
 
 INSERT INTO ChiTietPX(MaSP , MaPX , DonGiaXuat , SoLuong   ) VALUES
-('SP1' , 'PX2' , 40000 , 5   ),
-('SP1' , 'PX1' , 10000 , 5   ),
-('SP2' , 'PX4' , 5000 , 5   ),
-('SP6' , 'PX2' , 40000 , 5  ),
-('SP7' , 'PX2' , 40000 , 5  );
+('SP1' , 'PX2' , 650300 , 5 ),
+('SP1' , 'PX1' , 650300 , 5 ),
+('SP2' , 'PX3' , 652000 , 5  ),
+('SP6' , 'PX2' , 652000 , 5 ),
+('SP7' , 'PX2' , 625000 , 5 );
 

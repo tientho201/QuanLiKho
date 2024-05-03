@@ -1,350 +1,606 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.quanlikho.GUI;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 
-/**
- *
- * @author Tam
- */
-public class XuatHang extends javax.swing.JPanel {
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    /**
-     * Creates new form ChiTietPhieuXuat
-     */
-    public XuatHang() {
-        initComponents();
+import com.quanlikho.Connect.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+
+public class XuatHang extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private JTextField textField;
+	private JTextField txtVvjvjv;
+	private JTextField txtVvjvjv_1;
+	private JTable table_1;
+	private JLabel lblNewLabel_3;
+	private JTextField text_SL;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JLabel lblNewLabel_4;
+	private JButton btnNewButton_2;
+	private JLabel labThanhTien;
+	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
+	private JButton btnNewButton_5;
+	private int currentSTT = 1;
+	private JComboBox comboBox;
+	private JTable table;
+
+
+	/**
+	 * Create the panel.
+	 */
+	public XuatHang() {
+		setBounds(0,0, 1068, 693);
+		setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(25, 10, 490, 83);
+		add(panel);
+		panel.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(10, 24, 297, 29);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		btnNewButton = new JButton("Làm mới");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnNewButton.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/icons8_reset_25px_1.png")));
+		btnNewButton.setBounds(332, 23, 121, 29);
+		panel.add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("Mã phiếu nhập");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(548, 22, 127, 30);
+		add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Nhà cung cấp");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(548, 55, 160, 44);
+		add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Người tạo phiếu");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setBounds(548, 95, 171, 44);
+		add(lblNewLabel_2);
+		
+		txtVvjvjv = new JTextField();
+		txtVvjvjv.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtVvjvjv.setBounds(758, 23, 300, 30);
+		add(txtVvjvjv);
+		txtVvjvjv.setColumns(10);
+		
+		txtVvjvjv_1 = new JTextField("admin");
+		txtVvjvjv_1.setEditable(false);
+		txtVvjvjv_1.setEnabled(false);
+		txtVvjvjv_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtVvjvjv_1.setColumns(10);
+		txtVvjvjv_1.setBounds(758, 103, 300, 30);
+		add(txtVvjvjv_1);
+		
+		JTable table = new JTable(new DefaultTableModel(
+	        	new Object[][] {
+	        	},
+	        	new String[] {
+	        			"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"
+	        	}
+	        ));
+	        JScrollPane scrollPane = new JScrollPane(table); 
+	        scrollPane.setBounds(25, 111, 491, 496);
+	        add(scrollPane, BorderLayout.CENTER); 
+		
+	        table_1 = new JTable(new DefaultTableModel(
+	            	new Object[][] {
+	            	},
+	            	new String[] {
+	            		"STT", "Mã SP", "Tên SP", "Số lượng", "Đơn giá"
+	            	}
+	            ));
+	            JScrollPane scrollPane_1 = new JScrollPane(table_1); 
+	            scrollPane_1.setBounds(548, 149, 510, 376);
+	            add(scrollPane_1, BorderLayout.CENTER); 
+		
+		lblNewLabel_3 = new JLabel("Số lượng");
+		lblNewLabel_3.setForeground(new Color(255, 0, 0));
+		lblNewLabel_3.setBackground(new Color(255, 255, 255));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_3.setBounds(40, 642, 81, 24);
+		add(lblNewLabel_3);
+		
+		text_SL = new JTextField("1");
+		text_SL.setHorizontalAlignment(SwingConstants.CENTER);
+		text_SL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		text_SL.setBounds(179, 639, 97, 31);
+		add(text_SL);
+		text_SL.setColumns(10);
+		
+		btnNewButton_1 = new JButton("Thêm");
+		btnNewButton_1.setEnabled(false);
+		btnNewButton_1.setBackground(new Color(247, 234, 148));
+		btnNewButton_1.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/plus.png")));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_1.setBounds(351, 639, 109, 30);
+		add(btnNewButton_1);
+		
+		lblNewLabel_4 = new JLabel("Thành tiền");
+		lblNewLabel_4.setForeground(Color.RED);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_4.setBackground(Color.WHITE);
+		lblNewLabel_4.setBounds(548, 642, 81, 24);
+		add(lblNewLabel_4);
+		
+		btnNewButton_2 = new JButton("Xuất hàng");
+		btnNewButton_2.setEnabled(false);
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_2.setBackground(new Color(247, 234, 148));
+		btnNewButton_2.setBounds(911, 639, 127, 30);
+		add(btnNewButton_2);
+		
+		labThanhTien = new JLabel("0");
+		labThanhTien.setForeground(new Color(255, 0, 0));
+		labThanhTien.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labThanhTien.setBounds(716, 641, 97, 27);
+		add(labThanhTien);
+		
+		btnNewButton_3 = new JButton("Xuất excel");
+		btnNewButton_3.setBackground(new Color(255, 255, 255));
+		btnNewButton_3.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/sheet.png")));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_3.setBounds(548, 559, 171, 34);
+		add(btnNewButton_3);
+		
+		btnNewButton_4 = new JButton("Sửa số lượng");
+		btnNewButton_4.setEnabled(false);
+		btnNewButton_4.setBackground(new Color(255, 255, 255));
+		btnNewButton_4.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/pencil.png")));
+		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_4.setBounds(741, 559, 160, 34);
+		add(btnNewButton_4);
+		
+		btnNewButton_5 = new JButton("Xóa sản phẩm");
+		btnNewButton_5.setBackground(new Color(255, 255, 255));
+		btnNewButton_5.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/recycle-bin.png")));
+		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_5.setBounds(911, 559, 147, 34);
+		add(btnNewButton_5);
+		
+		comboBox = new JComboBox();
+		comboBox.setBounds(758, 63, 300, 30);
+		add(comboBox);
+
+		JLabel lblVnd = new JLabel("VND");
+		lblVnd.setForeground(Color.RED);
+		lblVnd.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblVnd.setBounds(912, 695, 41, 27);
+		add(lblVnd);
+
+		reloadTable(table);
+	}
+	/**
+	 * @param table
+	 */
+	private void reloadTable(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); 
+        try {
+            ConnectJDBC connectJDBC = new ConnectJDBC();
+            Connection connection = connectJDBC.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM SanPham");
+            while (rs.next()) {
+                String maSP = rs.getString("MaSP");
+                String tenSP = rs.getString("TenSP");
+                int soLuong = rs.getInt("SoLuong");
+                long donGia = rs.getLong("Gia");
+                // Add a row to the table model
+                model.addRow(new Object[]{maSP, tenSP, soLuong, donGia});
+            }
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// Get selected row index
+				int selectedRowIndex = table.getSelectedRow();
+				if (selectedRowIndex != -1) { 
+					Object quantity = table.getValueAt(selectedRowIndex, 2);
+					if (quantity instanceof Integer) {
+						int currentQuantity = (int) quantity;
+						// Thực hiện các thao tác khác
+						btnNewButton_1.setEnabled(true);
+					}
+				}
+			}
+		});
+		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRowIndex = table.getSelectedRow();
+				if (selectedRowIndex != -1) { 
+					Object[] rowData = new Object[table.getColumnCount()];
+					for (int i = 0; i < table.getColumnCount(); i++) {
+						rowData[i] = table.getValueAt(selectedRowIndex, i);
+					}
+					String maSP = (String) rowData[0];
+					int soLuong = soLuongData(maSP);
+					int enteredQuantity = Integer.parseInt(text_SL.getText());
+		
+					rowData[2] = text_SL.getText();
+					long unitPrice = (long) rowData[3];
+					long totalPrice = unitPrice * enteredQuantity;
+		
+					// Kiểm tra xem sản phẩm đã tồn tại trong table_1 chưa
+					boolean productExists = false;
+					DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+					for (int i = 0; i < model.getRowCount(); i++) {
+						if (model.getValueAt(i, 1).equals(maSP)) { // Kiểm tra mã sản phẩm
+							// Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng
+							int currentQuantity = (int) model.getValueAt(i, 3);
+							model.setValueAt(currentQuantity + enteredQuantity, i, 3); // Tăng số lượng
+							model.setValueAt((long) model.getValueAt(i, 4) + totalPrice, i, 4); // Cập nhật thành tiền
+							productExists = true;
+							break;
+						}
+					}
+					if (!productExists) {
+						// Nếu sản phẩm chưa tồn tại, thêm mới vào table_1
+						Object[] newRowData = new Object[rowData.length + 1];
+						newRowData[0] = currentSTT++;
+						System.arraycopy(rowData, 0, newRowData, 1, rowData.length);
+						newRowData[rowData.length] = totalPrice;
+						((DefaultTableModel) table_1.getModel()).addRow(newRowData);
+					}
+		
+					labThanhTien.setText(String.valueOf(calculateTotalPrice()));
+					btnNewButton_4.setEnabled(true);
+					btnNewButton_2.setEnabled(true);
+					text_SL.setText("1");
+				}
+			}
+		});
+		
+		String MaPX = generateMaPhieuXuat();
+		txtVvjvjv.setText(MaPX);
+
+		populateComboBoxMaNCC(comboBox);
+		
+		btnNewButton_4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRowIndex = table_1.getSelectedRow();
+				if (selectedRowIndex != -1) {
+					String maSP = (String) table_1.getValueAt(selectedRowIndex, 1); // Assuming product code is in the second column
+					long unitPrice = getUnitPriceFromDatabase(maSP);
+					String newQuantityStr = JOptionPane.showInputDialog(XuatHang.this, "Xuất số lượng mới:", "Sửa số lượng", JOptionPane.PLAIN_MESSAGE);
+					if (newQuantityStr != null && !newQuantityStr.isEmpty()) {
+						try {
+							int newQuantity = Integer.parseInt(newQuantityStr);
+							table_1.setValueAt(newQuantity, selectedRowIndex, 3); 
+							long newTotalPrice = unitPrice * newQuantity;
+							table_1.setValueAt(newTotalPrice, selectedRowIndex, 4); // Assuming total price is in the fifth column
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+		});
+
+		btnNewButton_5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRowIndex = table_1.getSelectedRow();
+                if (selectedRowIndex != -1) {
+                    // Hiển thị hộp thoại xác nhận
+                    int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        // Xóa hàng được chọn trong table_1
+                        ((DefaultTableModel) table_1.getModel()).removeRow(selectedRowIndex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(XuatHang.this, "Hãy chọn một sản phẩm để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String searchText = textField.getText().trim();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.setRowCount(0); 
+				try {
+					ConnectJDBC connectJDBC = new ConnectJDBC();
+					Connection connection = connectJDBC.getConnection();
+					PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM SanPham WHERE MaSP LIKE ? OR TenSP LIKE ?");
+					preparedStatement.setString(1, "%" + searchText + "%");
+					preparedStatement.setString(2, "%" + searchText + "%");
+					ResultSet rs = preparedStatement.executeQuery();
+					while (rs.next()) {
+						String maSP = rs.getString("MaSP");
+						String tenSP = rs.getString("TenSP");
+						int soLuong = rs.getInt("SoLuong");
+						long donGia = rs.getLong("Gia");
+						model.addRow(new Object[]{maSP, tenSP, soLuong, donGia});
+					}
+					rs.close();
+					preparedStatement.close();
+					connection.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				reloadTable(table);
+			}
+		});
+
+		btnNewButton_2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table_1.getRowCount() == 0) {
+					//JOptionPane.showMessageDialog(XuatHang.this, "Bảng sản phẩm đang trống. Vui lòng chọn sản phẩm trước khi nhập hàng.");
+					return; 
+				}
+				int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn nhập hàng không?", "Xác nhận nhập hàng", JOptionPane.YES_NO_OPTION);
+				if (option == JOptionPane.YES_OPTION) {
+					String maPhieuXuat = txtVvjvjv.getText();
+					String nhaCungCap = (String) comboBox.getSelectedItem();
+					LocalDate thoiGianTao = LocalDate.now(); // Lấy ngày hiện tại
+					String nguoiTaoPhieu = txtVvjvjv_1.getText();
+					String thanhTien = labThanhTien.getText();
+					ThemPhieuXuatVaoCSDL(maPhieuXuat, nhaCungCap, thoiGianTao, nguoiTaoPhieu, thanhTien);
+					ThemChiTietPhieuXuatVaoCSDL(maPhieuXuat);
+					reloadTable(table);
+					LamRongTableVaReloadTxt();
+					JOptionPane.showMessageDialog(null, "Xuất hàng thành công");
+					currentSTT = 1;
+					btnNewButton_1.setEnabled(true);
+				} else {
+					//
+				}
+			}
+		});
+		
+		
+	}
+			
+	private void LamRongTableVaReloadTxt() {
+		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		model.setRowCount(0); // Xóa tất cả các dòng trong bảng table_1
+	
+		String MaPX = generateMaPhieuXuat();
+		txtVvjvjv.setText(MaPX);
+	}
+	private void ThemPhieuXuatVaoCSDL(String maPhieuXuat, String nhaCungCap, LocalDate thoiGianTao, String nguoiTaoPhieu, String tongTien) {
+		ConnectJDBC connectJDBC = null;
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connectJDBC = new ConnectJDBC();
+			connection = connectJDBC.getConnection();
+			pst = connection.prepareStatement("INSERT INTO PhieuXuat (MaPX, MaNCC, ThoiGianTao, TenDangNhap, TongTien) VALUES (?, ?, ?, ?, ?)");
+			pst.setString(1, maPhieuXuat);
+			pst.setString(2, nhaCungCap);
+			pst.setObject(3, thoiGianTao);
+			pst.setString(4, nguoiTaoPhieu);
+			int tongTienInt = Integer.parseInt(tongTien);
+			pst.setInt(5, tongTienInt);
+			pst.executeUpdate();
+
+			pst.close();
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 
+	private void ThemChiTietPhieuXuatVaoCSDL(String maPhieuXuat) {
+		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ChiTietPX (MaSP, MaPX, DonGiaXuat, SoLuong) VALUES (?, ?, ?, ?)");
+			PreparedStatement updateStatement = connection.prepareStatement("UPDATE SanPham SET SoLuong = SoLuong + ? WHERE MaSP = ?");
+			for (int i = 0; i < model.getRowCount(); i++) {
+				String maSP = (String) model.getValueAt(i, 1); // Lấy mã sản phẩm từ cột thứ hai (index 1)
+				int soLuong = Integer.parseInt(model.getValueAt(i, 3).toString()); // Chuyển đổi từ Object sang String, sau đó từ String sang int
+				String donGiaXuatStr = model.getValueAt(i, 4).toString();
+				int donGiaXuat = Integer.parseInt(donGiaXuatStr);
+				preparedStatement.setString(1, maSP);
+				preparedStatement.setString(2, maPhieuXuat);
+				preparedStatement.setInt(3, donGiaXuat);
+				preparedStatement.setInt(4, -soLuong);
+				preparedStatement.executeUpdate();
+				updateStatement.setInt(1, soLuong);
+				updateStatement.setString(2, maSP);
+				updateStatement.executeUpdate();
+			}
+			preparedStatement.close();
+			updateStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+
+	private int soLuongData(String maSP) {
+		int soLuong = 0;
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT SoLuong FROM SanPham WHERE MaSP = ?");
+			preparedStatement.setString(1, maSP);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				soLuong = rs.getInt("SoLuong");
+			}
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return soLuong;
+
+	}
+
+	private String generateMaPhieuXuat() {
+		String maPhieuXuat = "";
+		try {
+			String maxMaPhieuXuat = findMaxMaPhieuXuat();
+			if (maxMaPhieuXuat != null && !maxMaPhieuXuat.isEmpty()) {
+				String[] parts = maxMaPhieuXuat.split("PX"); 
+				String prefix = parts[0]; 
+				int number = Integer.parseInt(parts[1]); 
+				if (number < 9999) { 
+					number++; // Tăng số lên 1
+					maPhieuXuat = prefix + "PX" + String.format("%04d", number); 
+				} else {
+					System.err.println("Số sau 'PX' đạt giới hạn");
+				}
+			} else {
+				maPhieuXuat = "PX0001"; 
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return maPhieuXuat;
+	}
+	
+	private String findMaxMaPhieuXuat() {
+		String maxMaPhieuXuat = "";
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MaPX FROM PhieuXuat");
+			int maxNumber = 0;
+			while (rs.next()) {
+				String maPhieuXuat = rs.getString("MaPX");
+				int number = Integer.parseInt(maPhieuXuat.substring(2));
+				if (number > maxNumber) {
+					maxNumber = number;
+					maxMaPhieuXuat = maPhieuXuat;
+				}
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// Xử lý ngoại lệ phù hợp
+		}
+		return maxMaPhieuXuat;
+	}
+
+	private void populateComboBoxMaNCC(JComboBox comboBox) {
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MaNCC FROM NhaCungCap");
+			comboBox.removeAllItems();
+			while (rs.next()) {
+				String maNCC = rs.getString("MaNCC");
+				comboBox.addItem(maNCC);
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private long getUnitPriceFromDatabase(String maSP) {
+		long unitPrice = 0;
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT Gia FROM SanPham WHERE MaSP = ?");
+			preparedStatement.setString(1, maSP);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				unitPrice = rs.getLong("Gia");
+			}
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			// Handle exceptions appropriately
+		}
+		return unitPrice;
+	}
+
+	private long calculateTotalPrice() {
+        long totalPrice = 0;
+        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Assuming "Đơn giá" is in the fourth column (index 3)
+            long donGia = (long) model.getValueAt(i, 4);
+            totalPrice += donGia;
+        }
+        return totalPrice;
+    }
+	
+	private boolean isQuantityValid(String maSP, int newQuantity) {
+        // Get the available quantity from the database
+        int soLuong = soLuongData(maSP);
+        return newQuantity <= soLuong;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-
-        jPanel1.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-        setBounds(0,0, 1068, 693);
-        
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/quanlikho/Item/icons8_reset_25px_1.png"))); // NOI18N
-        jButton1.setText("Làm mới");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1Layout.setHorizontalGroup(
-        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(jTextField1, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(jButton1)
-        			.addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addGap(31)
-        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(jButton1))
-        			.addContainerGap(15, Short.MAX_VALUE))
-        );
-        jPanel1.setLayout(jPanel1Layout);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Mã SP", "Tên SP", "Số lượng", "Giá", "Đại lí"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel2.setText("Số lượng");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(102, 204, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setText("Thêm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "STT", "Mã SP", "Tên SP", "Số lượng", "Giá", "Đại lí"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/quanlikho/Item/icons8-microsoft-excel-2019-25.png"))); // NOI18N
-        jButton3.setText("Nhập Excel");
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/quanlikho/Item/icons8_delete_25px_1.png"))); // NOI18N
-        jButton4.setText("Xóa SP");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/quanlikho/Item/icons8_edit_25px.png"))); // NOI18N
-        jButton5.setText("Sửa");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Mã phiếu");
-
-        jLabel4.setText("Người tạo");
-
-        jButton6.setBackground(new java.awt.Color(51, 204, 255));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton6.setText("Xuất Hàng");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("TỔNG TIỀN :");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addContainerGap()
-        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-        						.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(101)
-        					.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 62, Short.MAX_VALUE)
-        					.addGap(63)
-        					.addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-        					.addGap(51)
-        					.addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-        					.addGap(14)))
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(19)
-        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        						.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 605, GroupLayout.PREFERRED_SIZE)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        								.addComponent(jLabel3)
-        								.addComponent(jLabel4))
-        							.addGap(26)
-        							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        								.addComponent(jTextField3, GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-        								.addComponent(jTextField4)))))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(38)
-        							.addComponent(jButton3)
-        							.addGap(67)
-        							.addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(51)
-        							.addComponent(jLabel5)))
-        					.addGap(81)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(jButton5))))
-        			.addContainerGap())
-        );
-        layout.setVerticalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addGroup(layout.createSequentialGroup()
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(jLabel3))
-        					.addGap(18)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(jLabel4))))
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(19)
-        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        								.addComponent(jLabel5)
-        								.addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(18)
-        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        								.addComponent(jLabel2)
-        								.addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-        								.addComponent(jButton2))))
-        					.addGap(17))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 415, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(jButton4)
-        						.addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        						.addComponent(jButton5))
-        					.addGap(111)))
-        			.addContainerGap())
-        );
-        this.setLayout(layout);
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    // End of variables declaration//GEN-END:variables
+	
 }
+
+

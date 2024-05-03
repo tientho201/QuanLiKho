@@ -144,6 +144,12 @@ public class SanPhamBUS {
         
         return resultList;
     }
-	
+	public int countSoLuongSP() {
+		int countSP = 0 ; 
+		 for (SanPhamDTO sp : ds) {
+			 countSP++;
+		 }
+		 return countSP ; 
+	}
 }
 

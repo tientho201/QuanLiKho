@@ -8,8 +8,10 @@ public class SanPhamDTO {
 	private String MaLoai ; 
 	private String MaNSX ;
 	private String GhiChu ;
-	public SanPhamDTO(String maSP, String tenSP, int soLuong, int gia, String maLoai, String maNSX, String ghiChu) {
-		
+	private int Enable ;
+	public SanPhamDTO(String maSP, String tenSP, int soLuong, int gia, String maLoai, String maNSX, String ghiChu,
+			int enable) {
+	
 		MaSP = maSP;
 		TenSP = tenSP;
 		SoLuong = soLuong;
@@ -17,9 +19,10 @@ public class SanPhamDTO {
 		MaLoai = maLoai;
 		MaNSX = maNSX;
 		GhiChu = ghiChu;
+		Enable = enable;
 	}
 	public SanPhamDTO() {
-		
+	
 	}
 	public String getMaSP() {
 		return MaSP;
@@ -63,11 +66,11 @@ public class SanPhamDTO {
 	public void setGhiChu(String ghiChu) {
 		GhiChu = ghiChu;
 	}
-	@Override
-	public String toString() {
-		return "SanPhamDTO [MaSP=" + MaSP + ", TenSP=" + TenSP + ", SoLuong=" + SoLuong + ", Gia=" + Gia + ", MaLoai="
-				+ MaLoai + ", MaNSX=" + MaNSX + ", GhiChu=" + GhiChu + "]";
+	public int getEnable() {
+		return Enable;
 	}
-	
+	public void setEnable(int enable) {
+		Enable = enable;
+	} 
 	
 }

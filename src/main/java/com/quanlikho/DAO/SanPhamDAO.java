@@ -32,7 +32,8 @@ public class SanPhamDAO {
 				String maLoai = rs.getString("MaLoai") ; 
 				String maNSX = rs.getString("MaNSX");
 				String ghiChu = rs.getString("GhiChu");
-				SanPhamDTO sanPhamDTO = new SanPhamDTO(maSP , tenSP , soLuong , gia , maLoai , maNSX , ghiChu);
+				int enable = rs.getInt("Enable");
+				SanPhamDTO sanPhamDTO = new SanPhamDTO(maSP , tenSP , soLuong , gia , maLoai , maNSX , ghiChu , enable);
 				ds.add(sanPhamDTO);
 			}
 			rs.close();
@@ -44,7 +45,7 @@ public class SanPhamDAO {
 		return ds ; 
 	}
 	public void add(SanPhamDTO sp) {
-	    String sql = "INSERT INTO SanPham (MaSP, TenSP, SoLuong, Gia, MaLoai, MaNSX, GhiChu) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO SanPham (MaSP, TenSP, SoLuong, Gia, MaLoai, MaNSX, GhiChu , Enable) VALUES (?, ?, ?, ?, ?, ?, ? , ?)";
 	    try (Connection connection = connectJDBC.getConnection();
 	            PreparedStatement statement = connection.prepareStatement(sql)) {
 	        statement.setString(1, sp.getMaSP());
@@ -54,6 +55,7 @@ public class SanPhamDAO {
 	        statement.setString(5, sp.getMaLoai());
 	        statement.setString(6, sp.getMaNSX());
 	        statement.setString(7, sp.getGhiChu());
+	        statement.setInt(8, sp.getEnable());
 	        statement.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -61,7 +63,7 @@ public class SanPhamDAO {
 	}
 
 	public void update(SanPhamDTO sp) {
-		String sql = "UPDATE SanPham SET TenSP = ?, SoLuong = ?, Gia = ?, MaLoai = ?, MaNSX = ?, GhiChu = ? WHERE MaSP = ?";
+		String sql = "UPDATE SanPham SET TenSP = ?, SoLuong = ?, Gia = ?, MaLoai = ?, MaNSX = ?, GhiChu = ? , Enable = ?  WHERE MaSP = ?";
 	    try (Connection connection = connectJDBC.getConnection();
 	            PreparedStatement statement = connection.prepareStatement(sql)) {
 	        statement.setString(1, sp.getTenSP());
@@ -70,7 +72,8 @@ public class SanPhamDAO {
 	        statement.setString(4, sp.getMaLoai());
 	        statement.setString(5, sp.getMaNSX());
 	        statement.setString(6, sp.getGhiChu());
-	        statement.setString(7, sp.getMaSP());
+	        statement.setInt(7, sp.getEnable());
+	        statement.setString(8, sp.getMaSP());
 	        statement.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();

@@ -30,7 +30,9 @@ public class ConnectJDBC {
 	    public void disConnect()
 	    { 
 	        try{
-	        	statement.close();
+	        	if (this.statement != null) {
+	        	    this.statement.close();
+	        	}
 	        	connection.close();
 	        }catch (SQLException E){}
 	    }

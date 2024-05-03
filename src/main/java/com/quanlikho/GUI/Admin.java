@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
+import com.quanlikho.BUS.*;
+
 
 public class Admin extends JFrame {
 	Color DefaultColor = new Color(0, 128, 64);
@@ -42,10 +44,14 @@ public class Admin extends JFrame {
 	private TonKho tonKho ; 
 	private XuatHang xuatHang ;
 	private DoiThongTin doiThongTin ;
+	private DaiLy daiLy ; 
 	public JLabel lblTen;
 	private JPanel PanelAccount;
 	private JLabel lblAccount; 
-	private TaiKhoan taiKhoan ; 
+	private TaiKhoan taiKhoan ;
+	private JPanel PanelDaiLy;
+	private JLabel lbliL; 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -88,6 +94,7 @@ public class Admin extends JFrame {
 	 */
 	public Admin() {
 
+		
 //		panel.setBounds(20, 10, 317, 750);
 //		panel_1.setBounds(327,10,1180,750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,7 +137,7 @@ public class Admin extends JFrame {
 		lblTen.setForeground(new Color(255, 255, 255));
 		lblTen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblTen.setBounds(10, 47, 297, 47);
+		lblTen.setBounds(93, 47, 214, 47);
 		panel.add(lblTen);
 
 		PanelSanPham = new JPanel();
@@ -205,7 +212,7 @@ public class Admin extends JFrame {
 				NhaCungCapMouseClicked(e);
 			}
 		});
-		JLabel lblPhanLoai = new JLabel("Phân Loại");
+		JLabel lblPhanLoai = new JLabel("PHÂN LOẠI");
 		lblPhanLoai.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/data-classification_24.png")));
 		lblPhanLoai.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhanLoai.setForeground(Color.WHITE);
@@ -424,19 +431,36 @@ public class Admin extends JFrame {
 		lblAccount.setBounds(57, 0, 166, 37);
 		PanelAccount.add(lblAccount);
 		
-		JPanel PanelThongKe_1 = new JPanel();
-		PanelThongKe_1.setLayout(null);
-		PanelThongKe_1.setBorder(null);
-		PanelThongKe_1.setBackground(new Color(0, 128, 64));
-		PanelThongKe_1.setBounds(10, 492, 297, 37);
-		panel.add(PanelThongKe_1);
 		
-		JLabel lbliL = new JLabel("ĐẠI LÍ");
+		 PanelDaiLy = new JPanel();
+		PanelDaiLy.setLayout(null);
+		PanelDaiLy.setBorder(null);
+		PanelDaiLy.setBackground(new Color(0, 128, 64));
+		PanelDaiLy.setBounds(10, 492, 297, 37);
+		panel.add(PanelDaiLy);
+		PanelDaiLy.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				DaiLyMousePressed(e);
+			}
+
+			public void mouseClicked(MouseEvent e) {
+				DaiLyMouseClicked(e);
+			}
+		});
+		
+		 lbliL = new JLabel("ĐẠI LÝ");
+		lbliL.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/company_24.png")));
 		lbliL.setHorizontalAlignment(SwingConstants.LEFT);
 		lbliL.setForeground(Color.WHITE);
 		lbliL.setFont(new Font("Verdana", Font.BOLD, 15));
 		lbliL.setBounds(57, 0, 166, 37);
-		PanelThongKe_1.add(lbliL);
+		PanelDaiLy.add(lbliL);
+		
+		JLabel lblNewLabel_1 = new JLabel("Xin Chào:");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblNewLabel_1.setBounds(10, 47, 89, 47);
+		panel.add(lblNewLabel_1);
 
 	}
 
@@ -451,6 +475,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		sanPham = new SanPham();
 		MainContent.add(sanPham).setVisible(true);
@@ -479,6 +504,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phanLoai = new PhanLoai();
 		MainContent.add(phanLoai).setVisible(true);
@@ -507,11 +533,13 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		nhapHang = new NhapHang();
 		MainContent.add(nhapHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		nhapHang.txtVvjvjv_1.setText(lblTen.getText());
 
 	}
 
@@ -522,6 +550,7 @@ public class Admin extends JFrame {
 		MainContent.add(nhapHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		nhapHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
 
 	public void PhieuNhapMousePressed(MouseEvent evt) {
@@ -535,8 +564,10 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phieuNhap = new PhieuNhap();
+		
 		MainContent.add(phieuNhap).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
@@ -562,6 +593,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phieuXuat = new PhieuXuat();
 		MainContent.add(phieuXuat).setVisible(true);
@@ -589,6 +621,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(ClickedColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		thongKe = new ThongKe();
 		MainContent.add(thongKe).setVisible(true);
@@ -616,6 +649,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		tonKho = new TonKho();
 		MainContent.add(tonKho).setVisible(true);
@@ -643,6 +677,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		xuatHang = new XuatHang();
 		MainContent.add(xuatHang).setVisible(true);
@@ -670,6 +705,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(ClickedColor);
 		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		doiThongTin = new DoiThongTin();
 		doiThongTin.setVisible(true);
 	}
@@ -684,6 +720,7 @@ public class Admin extends JFrame {
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
 		PanelAccount.setBackground(ClickedColor);
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		taiKhoan = new TaiKhoan();
 		MainContent.add(taiKhoan).setVisible(true);
@@ -700,4 +737,33 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+	public void DaiLyMousePressed(MouseEvent evt) {
+		PanelSanPham.setBackground(DefaultColor);
+		PanelPhieuNhap.setBackground(DefaultColor);
+		PanelNhapHang.setBackground(DefaultColor);
+		PanelXuatHang.setBackground(DefaultColor);
+		PanelPhieuXuat.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
+		PanelTonKho.setBackground(DefaultColor);
+		PanelThongKe.setBackground(DefaultColor);
+		Paneldoithongtin.setBackground(DefaultColor);
+		PanelAccount.setBackground(DefaultColor);
+		PanelDaiLy.setBackground(ClickedColor);
+		MainContent.removeAll();
+		daiLy = new DaiLy();
+		MainContent.add(daiLy).setVisible(true);
+		MainContent.revalidate();
+		MainContent.repaint();
+
+	}
+
+	public void DaiLyMouseClicked(MouseEvent evt) {
+		// TODO add your handling code here:
+		MainContent.removeAll();
+		daiLy = new DaiLy();
+		MainContent.add(daiLy).setVisible(true);
+		MainContent.revalidate();
+		MainContent.repaint();
+	}
+	
 }

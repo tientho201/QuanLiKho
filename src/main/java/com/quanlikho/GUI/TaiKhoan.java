@@ -11,14 +11,33 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Component;
+import java.awt.Desktop;
+
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.quanlikho.BUS.*;
 import com.quanlikho.DTO.*;
@@ -125,6 +144,10 @@ public class TaiKhoan extends JPanel {
 		toolBar.addSeparator();
 
 		JButton btnNhapExcel = new JButton("Nhập Excel");
+		btnNhapExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNhapExcel.setIcon(new ImageIcon(TaiKhoan.class.getResource("/com/quanlikho/Item/logo_excel_32.png")));
 		btnNhapExcel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNhapExcel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -133,6 +156,11 @@ public class TaiKhoan extends JPanel {
 		toolBar.add(btnNhapExcel);
 
 		JButton btnXuatExcel = new JButton("Xuất Excel");
+		btnXuatExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				XuatExcel();
+			}
+		});
 		btnXuatExcel.setIcon(new ImageIcon(TaiKhoan.class.getResource("/com/quanlikho/Item/sheets_32.png")));
 		btnXuatExcel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnXuatExcel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -418,4 +446,108 @@ public class TaiKhoan extends JPanel {
 	        return new String(((JPasswordField) editorComponent).getPassword());
 	    }
 	}
+	private void XuatExcel() {                                            
+        // TODO add your handling code here:
+        try {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.showSaveDialog(this);
+            File saveFile = jFileChooser.getSelectedFile();
+            if (saveFile != null) {
+                saveFile = new File(saveFile.toString() + ".xlsx");
+                Workbook wb = new XSSFWorkbook();
+                Sheet sheet = wb.createSheet("Đại Lý");
+
+                Row rowCol = sheet.createRow(0);
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                    Cell cell = rowCol.createCell(i);
+                    cell.setCellValue(table.getColumnName(i));
+                }
+
+                for (int j = 0; j < table.getRowCount(); j++) {
+                    Row row = sheet.createRow(j + 1);
+                    for (int k = 0; k < table.getColumnCount(); k++) {
+                        Cell cell = row.createCell(k);
+                        if (table.getValueAt(j, k) != null) {
+                            cell.setCellValue(table.getValueAt(j, k).toString());
+                        }
+
+                    }
+                }
+                FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+                wb.write(out);
+                wb.close();
+                out.close();
+                openFile(saveFile.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }   
+	  private void NhapExcel() {                                            
+	        // TODO add your handling code here:
+	        //Import excel
+
+	        File excelFile;
+	        FileInputStream excelFIS = null;
+	        BufferedInputStream excelBIS = null;
+	        XSSFWorkbook excelJTableImport = null;
+	        JFileChooser jf = new JFileChooser();
+	        int result = jf.showOpenDialog(null);
+	        jf.setDialogTitle("Open file");
+	        Workbook workbook = null;
+	        if (result == JFileChooser.APPROVE_OPTION) {
+	            try {
+	                excelFile = jf.getSelectedFile();
+	                excelFIS = new FileInputStream(excelFile);
+	                excelBIS = new BufferedInputStream(excelFIS);
+	                excelJTableImport = new XSSFWorkbook(excelBIS);
+	                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+	                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+	                    XSSFRow excelRow = excelSheet.getRow(row);
+	                    String TenDangNhap = excelRow.getCell(0).getStringCellValue();
+	                    String hovaten = excelRow.getCell(1).getStringCellValue();
+	                    String email = excelRow.getCell(2).getStringCellValue();
+	                    String Password = excelRow.getCell(3).getStringCellValue();
+	                    String role = excelRow.getCell(4).getStringCellValue();
+	                    String trangThai = excelRow.getCell(5).getStringCellValue();
+	                    if (!accBUS.checkTenDangNhap(TenDangNhap)) {
+	                    	if (trangThai.equals("Hoạt động")) {
+	                    		AccountDTO accDTO  = new AccountDTO(TenDangNhap ,hovaten , email , Password , role , 1  );
+	                    		accBUS.addAcc(accDTO);
+	                    	} else {
+	                    		AccountDTO accDTO  = new AccountDTO(TenDangNhap ,hovaten , email , Password , role , 0  );
+	                    		accBUS.addAcc(accDTO);
+	                    	}
+	                    	
+	                    }else {
+	                    	if (trangThai.equals("Hoạt động")) {
+	                    		AccountDTO accDTO  = new AccountDTO(TenDangNhap ,hovaten , email , Password , role , 1  );
+	                    		accBUS.updateAcc(accDTO);
+	                    	} else {
+	                    		AccountDTO accDTO  = new AccountDTO(TenDangNhap ,hovaten , email , Password , role , 0  );
+	                    		accBUS.updateAcc(accDTO);
+	                    	}
+	                    }
+	            
+	                    DefaultTableModel table_acc = (DefaultTableModel) table.getModel();
+	                    table_acc.setRowCount(0);
+	                    Reload();
+	                	
+	                }
+	                JOptionPane.showMessageDialog(null, "Nhập Excel thành công!", "Thông báo", JOptionPane.DEFAULT_OPTION);
+	            } catch (FileNotFoundException ex) {
+	                Logger.getLogger(DaiLy.class.getName()).log(Level.SEVERE, null, ex);
+	            } catch (IOException ex) {
+	                Logger.getLogger(DaiLy.class.getName()).log(Level.SEVERE, null, ex);
+	            }
+	        }
+	  }
+	  private void openFile(String file) {
+	        try {
+	            File path = new File(file);
+	            Desktop.getDesktop().open(path);
+	        } catch (IOException e) {
+	            System.out.println(e);
+	        }
+	    }
 }

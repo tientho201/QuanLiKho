@@ -165,18 +165,19 @@ public class login extends JFrame {
 				lblThongBao.setText("");
 				
 				JFrame frame = new JFrame("JOptionPane showMessageDialog");
-				JOptionPane.showMessageDialog(frame, "Xin chào " + accountBUS.PutOnHovaTen(tenDangNhapValue) + " !",
+				JOptionPane.showMessageDialog(frame, "Xin chào " + accountBUS.PutOnTenDangNhap(tenDangNhapValue) + " !",
 						"", JOptionPane.INFORMATION_MESSAGE);
 				if (accountBUS.PutOnRole(tenDangNhapValue).equals("QuanLyKho")) {
 					QuanLyKho qlk = new QuanLyKho();
 					qlk.setVisible(true);
-					qlk.lblTen.setText(accountBUS.PutOnHovaTen(tenDangNhapValue));
+					qlk.lblTen.setText(accountBUS.PutOnTenDangNhap(tenDangNhapValue));
 				}
 				if (accountBUS.PutOnRole(tenDangNhapValue).equals("Admin")) {
 					Admin admin = new Admin();
 					admin.setVisible(true);
-					admin.lblTen.setText(accountBUS.PutOnHovaTen(tenDangNhapValue));
+					admin.lblTen.setText(accountBUS.PutOnTenDangNhap(tenDangNhapValue));
 				}
+				
 				this.hide();
 			}else {
 				lblThongBao.setText("Mật khẩu không chính xác");

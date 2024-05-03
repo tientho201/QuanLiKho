@@ -102,5 +102,19 @@ public class AccountBUS {
 	    }
 	    return -1; // Hoặc một giá trị khác đại diện cho việc không tìm thấy
 	}
-
+	public String PutOnTenDangNhap(String tenDangNhap) {
+		for (AccountDTO acc : ds) {
+			if (acc.getTenDangNhap().equals(tenDangNhap)) {
+				return acc.getTenDangNhap();
+			}
+		}
+		return null;
+	}
+	public int countAcc() {
+		int countAcc = 0 ; 
+		for (AccountDTO acc : ds) {
+			countAcc++ ;
+		}
+		return countAcc ; 
+	}
 }
