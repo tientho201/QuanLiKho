@@ -110,6 +110,22 @@ public class AccountBUS {
 		}
 		return null;
 	}
+	public String PutOnEmail(String tenDangNhap) {
+		for (AccountDTO acc : ds) {
+			if (acc.getTenDangNhap().equals(tenDangNhap)) {
+				return acc.getEmail();
+			}
+		}
+		return null;
+	}
+	public String PutOnPassword(String tenDangNhap) {
+		for (AccountDTO acc : ds) {
+			if (acc.getTenDangNhap().equals(tenDangNhap)) {
+				return acc.getPassword();
+			}
+		}
+		return null;
+	}
 	public int countAcc() {
 		int countAcc = 0 ; 
 		for (AccountDTO acc : ds) {

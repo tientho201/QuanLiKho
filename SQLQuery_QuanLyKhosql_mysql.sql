@@ -149,9 +149,9 @@ CREATE TABLE PhieuXuat(
 );
 
 INSERT INTO PhieuXuat(MaPX , MaNCC ,ThoiGianTao,TenDangNhap , MaDL  , TongTien) VALUES 
-('PX1' , 'NCC2' ,  '2024-03-27' , 'admin' ,  'DL1' , 3251500),
-('PX2' , 'NCC2' ,  '2024-03-27' , 'admin',  'DL3' , 9636500),
-('PX3' , 'NCC5' , '2024-03-27'  , 'admin',  'DL1' , 3260000);
+('PX0001' , 'NCC2' ,  '2024-03-27' , 'admin' ,  'DL1' , 3251500),
+('PX0002' , 'NCC2' ,  '2024-03-27' , 'admin',  'DL3' , 9636500),
+('PX0003' , 'NCC5' , '2024-03-27'  , 'admin',  'DL1' , 3260000);
 
 CREATE TABLE ChiTietPX(
     MaSP VARCHAR(10) NOT NULL, 
@@ -164,9 +164,9 @@ CREATE TABLE ChiTietPX(
 );
 
 INSERT INTO ChiTietPX(MaSP , MaPX , DonGiaXuat , SoLuong   ) VALUES
-('SP1' , 'PX2' , 650300 , 5 ),
-('SP1' , 'PX1' , 650300 , 5 ),
-('SP2' , 'PX3' , 652000 , 5  ),
-('SP6' , 'PX2' , 652000 , 5 ),
-('SP7' , 'PX2' , 625000 , 5 );
+('SP1' , 'PX0002' , 650300 , 5 ),
+('SP1' , 'PX0001' , 650300 , 5 ),
+('SP2' , 'PX0003' , 652000 , 5  ),
+('SP6' , 'PX0002' , 652000 , 5 ),
+('SP7' , 'PX0002' , 625000 , 5 );
 

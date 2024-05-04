@@ -177,7 +177,16 @@ public class login extends JFrame {
 					admin.setVisible(true);
 					admin.lblTen.setText(accountBUS.PutOnTenDangNhap(tenDangNhapValue));
 				}
-				
+				if (accountBUS.PutOnRole(tenDangNhapValue).equals("NhapHang")) {
+					NVNhapHang nvNhapHang = new NVNhapHang();
+					nvNhapHang.setVisible(true);
+					nvNhapHang.lblTen.setText(accountBUS.PutOnTenDangNhap(tenDangNhapValue));
+				}
+				if (accountBUS.PutOnRole(tenDangNhapValue).equals("XuatHang")) {
+					NVXuatHang nvXuatHang = new NVXuatHang();
+					nvXuatHang.setVisible(true);
+					nvXuatHang.lblTen.setText(accountBUS.PutOnTenDangNhap(tenDangNhapValue));
+				}
 				this.hide();
 			}else {
 				lblThongBao.setText("Mật khẩu không chính xác");

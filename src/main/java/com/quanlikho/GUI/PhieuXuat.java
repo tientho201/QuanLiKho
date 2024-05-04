@@ -1,6 +1,8 @@
 package com.quanlikho.GUI;
 
 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -18,6 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.BoxLayout;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.quanlikho.Connect.*;
 import com.quanlikho.DAO.*;
@@ -41,6 +47,14 @@ import java.awt.Font;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PhieuXuat extends JPanel {
 	// public static void main(String[] args) {
@@ -76,7 +90,7 @@ public class PhieuXuat extends JPanel {
 	public PhieuXuat() {
         
         // Đặt kích thước cho JPanel
-		setBounds(0,0, 1068, 693);
+		setBounds(0, 0, 1068, 693);
         setLayout(new BorderLayout(0, 0));
         
         JPanel panel = new JPanel();
@@ -112,16 +126,16 @@ public class PhieuXuat extends JPanel {
         panel_1.setLayout(null);
         
         comboBox = new JComboBox();
-        comboBox.setBounds(22, 26, 137, 28);
+        comboBox.setBounds(22, 26, 112, 28);
         panel_1.add(comboBox);
         
         textField = new JTextField();
-        textField.setBounds(196, 26, 122, 28);
+        textField.setBounds(161, 26, 166, 28);
         panel_1.add(textField);
         textField.setColumns(10);
         
         JButton btnReset = new JButton("Làm mới");
-        btnReset.setBounds(339, 24, 108, 33);
+        btnReset.setBounds(337, 24, 112, 33);
         btnReset.setIcon(new ImageIcon(PhieuXuat.class.getResource("/com/quanlikho/Item/icons8_reset_25px_1.png")));
         panel_1.add(btnReset);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -166,12 +180,12 @@ public class PhieuXuat extends JPanel {
         JPanel panel_1_1_1 = new JPanel();
         panel_1_1_1.setLayout(null);
         panel_1_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "L\u1ECDc theo gi\u00E1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-        panel_1_1_1.setBounds(563, 10, 495, 68);
+        panel_1_1_1.setBounds(563, 10, 505, 68);
         panel_3.add(panel_1_1_1);
         
         minPriceField = new JFormattedTextField();
         minPriceField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        minPriceField.setBounds(39, 28, 122, 27);
+        minPriceField.setBounds(39, 28, 127, 27);
         panel_1_1_1.add(minPriceField);
         
         JLabel lblT = new JLabel("Từ");
@@ -181,25 +195,25 @@ public class PhieuXuat extends JPanel {
         
         maxPriceField = new JFormattedTextField();
         maxPriceField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        maxPriceField.setBounds(258, 28, 131, 27);
+        maxPriceField.setBounds(233, 28, 127, 27);
         panel_1_1_1.add(maxPriceField);
         
         JLabel lbln = new JLabel("Đến");
         lbln.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        lbln.setBounds(193, 33, 55, 17);
+        lbln.setBounds(186, 33, 55, 17);
         panel_1_1_1.add(lbln);
         
         JButton btnNewButtonLoc_1 = new JButton("Lọc");
         btnNewButtonLoc_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btnNewButtonLoc_1.setBounds(420, 29, 55, 25);
+        btnNewButtonLoc_1.setBounds(406, 29, 55, 25);
         panel_1_1_1.add(btnNewButtonLoc_1);
         
         table = new JTable();
             JScrollPane scrollPane = new JScrollPane(table); // Đặt table vào trong JScrollPane
             panel_3.add(scrollPane);
-            scrollPane.setBounds(0, 88, 1058, 497);
+            scrollPane.setBounds(0, 88, 1068, 525);
             // Khởi tạo DefaultTableModel với các cột tương ứng
-        tableModel = new DefaultTableModel(new Object[]{"STT", "Mã phiếu xuất", "Nhà cung cấp", "Thời gian tạo", "Tổng tiền"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"STT", "Mã phiếu xuất", "Nhà cung cấp", "Thời gian tạo","Đại lí", "Tổng tiền"}, 0);
 
         // Truy vấn dữ liệu từ bảng PhieuXuat và thêm vào DefaultTableModel
         try {
@@ -213,10 +227,12 @@ public class PhieuXuat extends JPanel {
                 String maPX = resultSet.getString("MaPX");
                 String maNCC = resultSet.getString("MaNCC");
                 String ngayXuat = resultSet.getString("ThoiGianTao");
+                
+                String maDL = resultSet.getString("MaDL");
                 int tongTien = resultSet.getInt("TongTien");
 
                 // Thêm dòng mới vào DefaultTableModel
-                tableModel.addRow(new Object[]{stt, maPX, maNCC, ngayXuat, tongTien});
+                tableModel.addRow(new Object[]{stt, maPX, maNCC, ngayXuat, maDL, tongTien});
                 stt++;
             }
 
@@ -261,23 +277,121 @@ public class PhieuXuat extends JPanel {
         }); 
         
         
-        btnThem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 int selectedRow = table.getSelectedRow();
-                 if (selectedRow != -1) {
-                     String maPhieuXuat = tableModel.getValueAt(selectedRow, 1).toString();
-                     String maNhaCungCap = tableModel.getValueAt(selectedRow, 2).toString(); // Lấy mã nhà cung cấp
-                     String ngayTao = tableModel.getValueAt(selectedRow, 3).toString();
-                     String tongTien = tableModel.getValueAt(selectedRow, 4).toString();
-                     chiTietPhieuXuatDialog = new ChiTietPhieuXuat(maPhieuXuat);
-                     chiTietPhieuXuatDialog.hienThiChiTietPhieuXuat(maPhieuXuat, maNhaCungCap, ngayTao, tongTien);
-                     chiTietPhieuXuatDialog.setVisible(true);
-                 }
-                 else {
-                	 JOptionPane.showMessageDialog(null, "Vui lòng chọn một phiếu xuất để xem!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                 }
-        	}
-        });
+btnThem.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            Object maPhieuXuatObj = tableModel.getValueAt(selectedRow, 1);
+            Object maNhaCungCapObj = tableModel.getValueAt(selectedRow, 2);
+            Object ngayTaoObj = tableModel.getValueAt(selectedRow, 3);
+            Object tongTienObj = tableModel.getValueAt(selectedRow, 5);
+
+            if (maPhieuXuatObj != null ) {
+                String maPhieuXuat = maPhieuXuatObj.toString();
+                String maNhaCungCap = maNhaCungCapObj.toString();
+                String ngayTao = ngayTaoObj.toString();
+                String tongTien = tongTienObj.toString();
+
+                chiTietPhieuXuatDialog = new ChiTietPhieuXuat(maPhieuXuat);
+                chiTietPhieuXuatDialog.hienThiChiTietPhieuXuat(maPhieuXuat, maNhaCungCap, ngayTao, tongTien);
+                chiTietPhieuXuatDialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một phiếu xuất để xem!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+});
+
+
+        
+        btnNhap.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn tệp Excel");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Tệp Excel", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showOpenDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToImport = fileChooser.getSelectedFile();
+            try {
+                FileInputStream fileInputStream = new FileInputStream(fileToImport);
+                Workbook workbook = new XSSFWorkbook(fileInputStream);
+                Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
+                Iterator<Row> iterator = sheet.iterator();
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+                while (iterator.hasNext()) {
+                    Row currentRow = iterator.next();
+                    // Bỏ qua dòng tiêu đề (nếu cần)
+                    if (currentRow.getRowNum() == 0) {
+                        continue;
+                    }
+
+                    // Lấy dữ liệu từ các ô trong dòng hiện tại
+                    String maPX = currentRow.getCell(0).getStringCellValue();
+                    String maNCC = currentRow.getCell(1).getStringCellValue();
+                    String ngayXuat = currentRow.getCell(2).getStringCellValue();
+                    String tongTien = currentRow.getCell(3).getStringCellValue();
+
+                    // Thêm dữ liệu vào table
+                    model.addRow(new Object[]{maPX, maNCC, ngayXuat, tongTien});
+                }
+
+                workbook.close();
+                fileInputStream.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Không tìm thấy tệp Excel.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi khi đọc tệp Excel.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+});
+
+        
+      btnXuat.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        try {
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("PhieuXuat");
+
+            Row headerRow = sheet.createRow(0);
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                headerRow.createCell(i).setCellValue(table.getColumnName(i));
+            }
+
+            for (int row = 0; row < table.getRowCount(); row++) {
+                Row excelRow = sheet.createRow(row + 1);
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                    Object value = table.getValueAt(row, col);
+                    if (value != null) {
+                        excelRow.createCell(col).setCellValue(value.toString());
+                    } else {
+                        excelRow.createCell(col).setCellValue(""); // Gán giá trị rỗng nếu giá trị là null
+                    }
+                }
+            }
+
+            String excelFilePath = "PhieuXuat.xlsx";
+            FileOutputStream fileOut = new FileOutputStream(excelFilePath);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+
+            JOptionPane.showMessageDialog(null, "Dữ liệu đã được xuất thành công vào file Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xuất dữ liệu vào file Excel thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+});
+
+
         
         btnNewButtonLoc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -389,8 +503,14 @@ public class PhieuXuat extends JPanel {
         });
         
     }
+        
+        
 
-    private void performSearch() {
+  
+
+
+
+	private void performSearch() {
         String selectedOption = (String) comboBox.getSelectedItem();
         String searchText = textField.getText().trim();
         try {
@@ -443,8 +563,9 @@ public class PhieuXuat extends JPanel {
                 String maPX = resultSet.getString("MaPX");
                 String maNCC = resultSet.getString("MaNCC");
                 String ngayXuat = resultSet.getString("ThoiGianTao");
+                String maDL = resultSet.getString("MaDL");
                 int tongTien = resultSet.getInt("TongTien");
-                tableModel.addRow(new Object[]{stt, maPX, maNCC, ngayXuat, tongTien});
+                tableModel.addRow(new Object[]{stt, maPX, maNCC, ngayXuat, maDL, tongTien});
                 stt++;
             }
 

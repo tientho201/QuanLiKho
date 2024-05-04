@@ -61,7 +61,6 @@ public class TaiKhoan extends JPanel {
 	private JTextField textFieldEmail;
 	private JComboBox comboBoxTrangThai;
 	private JComboBox comboBoxVaiTro;
-	private JLabel lblLoi;
 	private JPasswordField passwordField;
 
 	/**
@@ -249,12 +248,6 @@ public class TaiKhoan extends JPanel {
 		comboBoxTrangThai.setBounds(870, 635, 188, 28);
 		add(comboBoxTrangThai);
 
-		lblLoi = new JLabel("");
-		lblLoi.setForeground(new Color(255, 0, 0));
-		lblLoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblLoi.setBounds(247, 712, 460, 28);
-		add(lblLoi);
-
 		JLabel lblMatkhau = new JLabel("Mật khẩu");
 		lblMatkhau.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblMatkhau.setBounds(747, 579, 113, 28);
@@ -326,18 +319,21 @@ public class TaiKhoan extends JPanel {
 
 	private boolean KiemTraTrong() {
 		if (textFieldTenDangNhap.getText() == null || textFieldTenDangNhap.getText().equals("")) {
-			lblLoi.setText("Tên đăng nhập không được trống!");
+			
+			JOptionPane.showMessageDialog(null, "Tên đăng nhập không được trống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			textFieldTenDangNhap.requestFocus();
 			return false;
 		}
 		if (textFieldHovaTen.getText() == null || textFieldHovaTen.getText().equals("")) {
-			lblLoi.setText("Họ và tên không được trống!");
+
+			JOptionPane.showMessageDialog(null, "Họ và tên không được trống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			textFieldHovaTen.requestFocus();
 			return false;
 		}
 		
 		if (passwordField.getText() == null || passwordField.getText().equals("")) {
-			lblLoi.setText("Mật khẩu không được trống!");
+			
+			JOptionPane.showMessageDialog(null, "Mật khẩu không được trống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			passwordField.requestFocus();
 			return false;
 		}
@@ -352,7 +348,7 @@ public class TaiKhoan extends JPanel {
 		textFieldEmail.setText("");
 		comboBoxTrangThai.setSelectedIndex(0);
 		comboBoxVaiTro.setSelectedIndex(0);
-		lblLoi.setText("");
+		
 		passwordField.setText("");
 		AccountBUS accBUSreload = new AccountBUS();
 		if (accBUSreload.getList() == null) {

@@ -11,37 +11,32 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 
-
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-
-
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JTable;
-
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import com.quanlikho.Connect.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-
-
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
-
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 
 
 public class NhapHang extends JPanel {
@@ -49,6 +44,7 @@ public class NhapHang extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField txtVvjvjv;
+	public JTextField txtVvjvjv_1;
 	private JTable table_1;
 	private JLabel lblNewLabel_3;
 	private JTextField text_SL;
@@ -63,14 +59,13 @@ public class NhapHang extends JPanel {
 	private int currentSTT = 1;
 	private JComboBox comboBox;
 	private JTable table;
-	public JLabel txtVvjvjv_1;
 
 
 	/**
 	 * Create the panel.
 	 */
 	public NhapHang() {
-		setBounds(0,0, 1068, 693);
+		setBounds(0, 0, 1068, 693);
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -111,6 +106,14 @@ public class NhapHang extends JPanel {
 		add(txtVvjvjv);
 		txtVvjvjv.setColumns(10);
 		
+		txtVvjvjv_1 = new JTextField("admin");
+		txtVvjvjv_1.setEnabled(false);
+		txtVvjvjv_1.setEditable(false);
+		txtVvjvjv_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtVvjvjv_1.setColumns(10);
+		txtVvjvjv_1.setBounds(758, 103, 300, 30);
+		add(txtVvjvjv_1);
+		
 		JTable table = new JTable(new DefaultTableModel(
 	        	new Object[][] {
 	        	},
@@ -119,7 +122,7 @@ public class NhapHang extends JPanel {
 	        	}
 	        ));
 	        JScrollPane scrollPane = new JScrollPane(table); 
-	        scrollPane.setBounds(25, 111, 491, 489);
+	        scrollPane.setBounds(25, 111, 491, 514);
 	        add(scrollPane, BorderLayout.CENTER); 
 		
 	        table_1 = new JTable(new DefaultTableModel(
@@ -130,20 +133,20 @@ public class NhapHang extends JPanel {
 	            	}
 	            ));
 	            JScrollPane scrollPane_1 = new JScrollPane(table_1); 
-	            scrollPane_1.setBounds(548, 149, 510, 379);
+	            scrollPane_1.setBounds(548, 149, 510, 400);
 	            add(scrollPane_1, BorderLayout.CENTER); 
 		
 		lblNewLabel_3 = new JLabel("Số lượng");
 		lblNewLabel_3.setForeground(new Color(255, 0, 0));
 		lblNewLabel_3.setBackground(new Color(255, 255, 255));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(38, 635, 81, 24);
+		lblNewLabel_3.setBounds(25, 655, 81, 24);
 		add(lblNewLabel_3);
 		
 		text_SL = new JTextField("1");
 		text_SL.setHorizontalAlignment(SwingConstants.CENTER);
 		text_SL.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		text_SL.setBounds(192, 632, 97, 31);
+		text_SL.setBounds(177, 652, 97, 31);
 		add(text_SL);
 		text_SL.setColumns(10);
 		
@@ -152,34 +155,34 @@ public class NhapHang extends JPanel {
 		btnNewButton_1.setBackground(new Color(247, 234, 148));
 		btnNewButton_1.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/plus.png")));
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1.setBounds(373, 632, 109, 30);
+		btnNewButton_1.setBounds(359, 652, 109, 30);
 		add(btnNewButton_1);
 		
 		lblNewLabel_4 = new JLabel("Thành tiền");
 		lblNewLabel_4.setForeground(Color.RED);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_4.setBackground(Color.WHITE);
-		lblNewLabel_4.setBounds(566, 635, 81, 24);
+		lblNewLabel_4.setBounds(571, 655, 81, 24);
 		add(lblNewLabel_4);
 		
 		btnNewButton_2 = new JButton("Nhập hàng");
 		btnNewButton_2.setEnabled(false);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_2.setBackground(new Color(247, 234, 148));
-		btnNewButton_2.setBounds(931, 632, 127, 30);
+		btnNewButton_2.setBounds(912, 652, 127, 30);
 		add(btnNewButton_2);
 		
 		labThanhTien = new JLabel("0");
 		labThanhTien.setForeground(new Color(255, 0, 0));
 		labThanhTien.setFont(new Font("Tahoma", Font.BOLD, 14));
-		labThanhTien.setBounds(698, 634, 145, 27);
+		labThanhTien.setBounds(694, 654, 160, 27);
 		add(labThanhTien);
 		
 		btnNewButton_3 = new JButton("Nhập excel");
 		btnNewButton_3.setBackground(new Color(255, 255, 255));
 		btnNewButton_3.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/sheet.png")));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(548, 556, 171, 34);
+		btnNewButton_3.setBounds(548, 575, 171, 34);
 		add(btnNewButton_3);
 		
 		btnNewButton_4 = new JButton("Sửa số lượng");
@@ -187,14 +190,14 @@ public class NhapHang extends JPanel {
 		btnNewButton_4.setBackground(new Color(255, 255, 255));
 		btnNewButton_4.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/pencil.png")));
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_4.setBounds(742, 556, 137, 34);
+		btnNewButton_4.setBounds(743, 575, 150, 34);
 		add(btnNewButton_4);
 		
 		btnNewButton_5 = new JButton("Xóa sản phẩm");
 		btnNewButton_5.setBackground(new Color(255, 255, 255));
 		btnNewButton_5.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/recycle-bin.png")));
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_5.setBounds(912, 556, 146, 34);
+		btnNewButton_5.setBounds(912, 575, 150, 34);
 		add(btnNewButton_5);
 		
 		comboBox = new JComboBox();
@@ -204,15 +207,10 @@ public class NhapHang extends JPanel {
 		JLabel lblVnd = new JLabel("VND");
 		lblVnd.setForeground(Color.RED);
 		lblVnd.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblVnd.setBounds(860, 634, 41, 27);
+		lblVnd.setBounds(912, 695, 41, 27);
 		add(lblVnd);
 
 		reloadTable(table);
-		
-		txtVvjvjv_1 = new JLabel("");
-		txtVvjvjv_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		txtVvjvjv_1.setBounds(758, 105, 300, 28);
-		add(txtVvjvjv_1);
 	}
 	/**
 	 * @param table
@@ -224,7 +222,7 @@ public class NhapHang extends JPanel {
             ConnectJDBC connectJDBC = new ConnectJDBC();
             Connection connection = connectJDBC.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM SanPham");
+            ResultSet rs = statement.executeQuery("SELECT * FROM SanPham Where Enable = 1");
             while (rs.next()) {
                 String maSP = rs.getString("MaSP");
                 String tenSP = rs.getString("TenSP");
@@ -278,7 +276,7 @@ public class NhapHang extends JPanel {
 					for (int i = 0; i < model.getRowCount(); i++) {
 						if (model.getValueAt(i, 1).equals(maSP)) { // Kiểm tra mã sản phẩm
 							// Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng
-							int currentQuantity = Integer.valueOf( (String) model.getValueAt(i, 3));
+							int currentQuantity = (int) model.getValueAt(i, 3);
 							model.setValueAt(currentQuantity + enteredQuantity, i, 3); // Tăng số lượng
 							model.setValueAt((long) model.getValueAt(i, 4) + totalPrice, i, 4); // Cập nhật thành tiền
 							productExists = true;
@@ -598,6 +596,7 @@ public class NhapHang extends JPanel {
         int soLuong = soLuongData(maSP);
         return newQuantity <= soLuong;
     }
+
 	
 }
 

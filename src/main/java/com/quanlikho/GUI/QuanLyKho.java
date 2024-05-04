@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
+import com.quanlikho.BUS.*;
+
 
 public class QuanLyKho extends JFrame {
 	Color DefaultColor = new Color(0, 128, 64);
@@ -24,7 +26,7 @@ public class QuanLyKho extends JFrame {
 	private JPanel contentPane;
 	private JPanel PanelSanPham;
 	private JPanel PanelPhieuNhap;
-	private JPanel PanelNhaCungCap;
+	private JPanel PanelPhanLoai;
 	private JPanel PanelNhapHang;
 	private JPanel PanelXuatHang;
 	private JPanel PanelPhieuXuat;
@@ -42,7 +44,11 @@ public class QuanLyKho extends JFrame {
 	private TonKho tonKho ; 
 	private XuatHang xuatHang ;
 	private DoiThongTin doiThongTin ;
-	public JLabel lblTen; 
+	private DaiLy daiLy ; 
+	public JLabel lblTen;
+	private JPanel PanelDaiLy;
+	private JLabel lbliL; 
+
 	/**
 	 * Launch the application.
 	 */
@@ -85,10 +91,11 @@ public class QuanLyKho extends JFrame {
 	 */
 	public QuanLyKho() {
 
+		
 //		panel.setBounds(20, 10, 317, 750);
 //		panel_1.setBounds(327,10,1180,750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1522, 795);
+		setBounds(100, 100, 1406, 735);
 		setTitle("Quản Lý Kho");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -106,10 +113,11 @@ public class QuanLyKho extends JFrame {
 		MainContent.setLayout(null);
 
 		SanPham pf = new SanPham();
+		pf.setBounds(0, 0, 1180, 693);
 		MainContent.add(pf);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(5, 5, 317, 750);
+		panel.setBounds(5, 5, 317, 690);
 		panel.setBackground(new Color(0, 128, 64));
 
 		contentPane.add(panel);
@@ -126,13 +134,12 @@ public class QuanLyKho extends JFrame {
 		lblTen.setForeground(new Color(255, 255, 255));
 		lblTen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblTen.setBounds(10, 47, 297, 47);
+		lblTen.setBounds(93, 47, 214, 47);
 		panel.add(lblTen);
 
 		PanelSanPham = new JPanel();
 		PanelSanPham.setBackground(new Color(0, 128, 64));
-		PanelSanPham.setBorder(null);
-		PanelSanPham.setBounds(10, 112, 297, 47);
+		PanelSanPham.setBounds(10, 112, 297, 37);
 		panel.add(PanelSanPham);
 		PanelSanPham.setLayout(null);
 		PanelSanPham.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -148,11 +155,11 @@ public class QuanLyKho extends JFrame {
 		});
 
 		JLabel lblSanPham = new JLabel("SẢN PHẨM");
-		lblSanPham.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/delivery-box_24.png")));
+		lblSanPham.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/delivery-box_24.png")));
 		lblSanPham.setForeground(new Color(255, 255, 255));
-		lblSanPham.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblSanPham.setFont(new Font("Verdana", Font.BOLD, 15));
 		lblSanPham.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSanPham.setBounds(55, 0, 138, 47);
+		lblSanPham.setBounds(54, 0, 138, 37);
 		PanelSanPham.add(lblSanPham);
 
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -164,7 +171,7 @@ public class QuanLyKho extends JFrame {
 		PanelPhieuNhap.setLayout(null);
 		PanelPhieuNhap.setBorder(null);
 		PanelPhieuNhap.setBackground(new Color(0, 128, 64));
-		PanelPhieuNhap.setBounds(10, 283, 297, 47);
+		PanelPhieuNhap.setBounds(10, 253, 297, 37);
 		panel.add(PanelPhieuNhap);
 		PanelPhieuNhap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelPhieuNhap.addMouseListener(new MouseAdapter() {
@@ -179,21 +186,21 @@ public class QuanLyKho extends JFrame {
 		
 		
 		JLabel lblPhieuNhap = new JLabel("PHIẾU NHẬP");
-		lblPhieuNhap.setBounds(57, 0, 166, 47);
+		lblPhieuNhap.setBounds(57, 0, 166, 37);
 		PanelPhieuNhap.add(lblPhieuNhap);
-		lblPhieuNhap.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/gift-voucher_24.png")));
+		lblPhieuNhap.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/gift-voucher_24.png")));
 		lblPhieuNhap.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhieuNhap.setForeground(Color.WHITE);
-		lblPhieuNhap.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblPhieuNhap.setFont(new Font("Verdana", Font.BOLD, 15));
 
-		PanelNhaCungCap = new JPanel();
-		PanelNhaCungCap.setLayout(null);
-		PanelNhaCungCap.setBorder(null);
-		PanelNhaCungCap.setBackground(new Color(0, 128, 64));
-		PanelNhaCungCap.setBounds(10, 169, 297, 47);
-		panel.add(PanelNhaCungCap);
-		PanelNhaCungCap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		PanelNhaCungCap.addMouseListener(new MouseAdapter() {
+		PanelPhanLoai = new JPanel();
+		PanelPhanLoai.setLayout(null);
+		PanelPhanLoai.setBorder(null);
+		PanelPhanLoai.setBackground(new Color(0, 128, 64));
+		PanelPhanLoai.setBounds(10, 159, 297, 37);
+		panel.add(PanelPhanLoai);
+		PanelPhanLoai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		PanelPhanLoai.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				NhaCungCapMousePressed(e);
 			}
@@ -202,19 +209,19 @@ public class QuanLyKho extends JFrame {
 				NhaCungCapMouseClicked(e);
 			}
 		});
-		JLabel lblNhaCungCap = new JLabel("NHÀ CUNG CẤP");
-		lblNhaCungCap.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/supplier_24.png")));
-		lblNhaCungCap.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNhaCungCap.setForeground(Color.WHITE);
-		lblNhaCungCap.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblNhaCungCap.setBounds(56, 0, 186, 47);
-		PanelNhaCungCap.add(lblNhaCungCap);
+		JLabel lblPhanLoai = new JLabel("PHÂN LOẠI");
+		lblPhanLoai.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/data-classification_24.png")));
+		lblPhanLoai.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPhanLoai.setForeground(Color.WHITE);
+		lblPhanLoai.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblPhanLoai.setBounds(56, 0, 186, 37);
+		PanelPhanLoai.add(lblPhanLoai);
 
 		PanelNhapHang = new JPanel();
 		PanelNhapHang.setLayout(null);
 		PanelNhapHang.setBorder(null);
 		PanelNhapHang.setBackground(new Color(0, 128, 64));
-		PanelNhapHang.setBounds(10, 226, 297, 47);
+		PanelNhapHang.setBounds(10, 206, 297, 37);
 		panel.add(PanelNhapHang);
 		PanelNhapHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelNhapHang.addMouseListener(new MouseAdapter() {
@@ -228,18 +235,18 @@ public class QuanLyKho extends JFrame {
 		});
 
 		JLabel lblNhapHang = new JLabel("NHẬP HÀNG");
-		lblNhapHang.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/PhieuNhap_24.png")));
+		lblNhapHang.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/PhieuNhap_24.png")));
 		lblNhapHang.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNhapHang.setForeground(Color.WHITE);
-		lblNhapHang.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblNhapHang.setBounds(56, 0, 160, 47);
+		lblNhapHang.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblNhapHang.setBounds(56, 0, 160, 37);
 		PanelNhapHang.add(lblNhapHang);
 
 		PanelXuatHang = new JPanel();
 		PanelXuatHang.setLayout(null);
 		PanelXuatHang.setBorder(null);
 		PanelXuatHang.setBackground(new Color(0, 128, 64));
-		PanelXuatHang.setBounds(10, 340, 297, 47);
+		PanelXuatHang.setBounds(10, 300, 297, 37);
 		panel.add(PanelXuatHang);
 		PanelXuatHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelXuatHang.addMouseListener(new MouseAdapter() {
@@ -254,18 +261,18 @@ public class QuanLyKho extends JFrame {
 		
 
 		JLabel lblXuatHang = new JLabel("XUẤT HÀNG");
-		lblXuatHang.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/XuatHang_24.png")));
+		lblXuatHang.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/XuatHang_24.png")));
 		lblXuatHang.setHorizontalAlignment(SwingConstants.LEFT);
 		lblXuatHang.setForeground(Color.WHITE);
-		lblXuatHang.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblXuatHang.setBounds(57, 0, 166, 47);
+		lblXuatHang.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblXuatHang.setBounds(57, 0, 166, 37);
 		PanelXuatHang.add(lblXuatHang);
 
 		PanelPhieuXuat = new JPanel();
 		PanelPhieuXuat.setLayout(null);
 		PanelPhieuXuat.setBorder(null);
 		PanelPhieuXuat.setBackground(new Color(0, 128, 64));
-		PanelPhieuXuat.setBounds(10, 397, 297, 47);
+		PanelPhieuXuat.setBounds(10, 347, 297, 37);
 		panel.add(PanelPhieuXuat);
 		PanelPhieuXuat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelPhieuXuat.addMouseListener(new MouseAdapter() {
@@ -280,18 +287,18 @@ public class QuanLyKho extends JFrame {
 		
 		
 		JLabel lblPhieuXuat = new JLabel("PHIẾU XUẤT");
-		lblPhieuXuat.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/bill_24.png")));
+		lblPhieuXuat.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/bill_24.png")));
 		lblPhieuXuat.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhieuXuat.setForeground(Color.WHITE);
-		lblPhieuXuat.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblPhieuXuat.setBounds(57, 0, 166, 47);
+		lblPhieuXuat.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblPhieuXuat.setBounds(57, 0, 166, 37);
 		PanelPhieuXuat.add(lblPhieuXuat);
 
 		PanelThongKe = new JPanel();
 		PanelThongKe.setLayout(null);
 		PanelThongKe.setBorder(null);
 		PanelThongKe.setBackground(new Color(0, 128, 64));
-		PanelThongKe.setBounds(10, 511, 297, 47);
+		PanelThongKe.setBounds(10, 441, 297, 37);
 		panel.add(PanelThongKe);
 		PanelThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelThongKe.addMouseListener(new MouseAdapter() {
@@ -304,18 +311,18 @@ public class QuanLyKho extends JFrame {
 			}
 		});
 		JLabel lblThongKe = new JLabel("THỐNG KÊ");
-		lblThongKe.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/thongke_24.png")));
+		lblThongKe.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/thongke_24.png")));
 		lblThongKe.setHorizontalAlignment(SwingConstants.LEFT);
 		lblThongKe.setForeground(Color.WHITE);
-		lblThongKe.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblThongKe.setBounds(57, 0, 166, 47);
+		lblThongKe.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblThongKe.setBounds(57, 0, 166, 37);
 		PanelThongKe.add(lblThongKe);
 
 		PanelTonKho = new JPanel();
 		PanelTonKho.setLayout(null);
 		PanelTonKho.setBorder(null);
 		PanelTonKho.setBackground(new Color(0, 128, 64));
-		PanelTonKho.setBounds(10, 454, 297, 47);
+		PanelTonKho.setBounds(10, 394, 297, 37);
 		panel.add(PanelTonKho);
 		PanelTonKho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		PanelTonKho.addMouseListener(new MouseAdapter() {
@@ -329,11 +336,11 @@ public class QuanLyKho extends JFrame {
 		});
 
 		JLabel lblTongKho = new JLabel("TỒN KHO");
-		lblTongKho.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/tongkho_24.png")));
+		lblTongKho.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/tongkho_24.png")));
 		lblTongKho.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTongKho.setForeground(Color.WHITE);
-		lblTongKho.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblTongKho.setBounds(57, 0, 166, 47);
+		lblTongKho.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblTongKho.setBounds(57, 0, 166, 37);
 		PanelTonKho.add(lblTongKho);
 
 		JLabel lblNewLabel_2_1 = new JLabel("");
@@ -345,7 +352,7 @@ public class QuanLyKho extends JFrame {
 		Paneldangxuat.setLayout(null);
 		Paneldangxuat.setBorder(null);
 		Paneldangxuat.setBackground(new Color(0, 128, 64));
-		Paneldangxuat.setBounds(10, 693, 297, 47);
+		Paneldangxuat.setBounds(10, 649, 297, 37);
 		panel.add(Paneldangxuat);
 		Paneldangxuat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		Paneldangxuat.addMouseListener(new MouseAdapter() {
@@ -364,20 +371,29 @@ public class QuanLyKho extends JFrame {
 		});
 			
 		JLabel lbldangxuat = new JLabel("ĐĂNG XUẤT");
-		lbldangxuat.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/logout_24.png")));
+		lbldangxuat.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/logout_24.png")));
 		lbldangxuat.setHorizontalAlignment(SwingConstants.LEFT);
 		lbldangxuat.setForeground(Color.WHITE);
-		lbldangxuat.setFont(new Font("Verdana", Font.BOLD, 18));
-		lbldangxuat.setBounds(57, 0, 166, 47);
+		lbldangxuat.setFont(new Font("Verdana", Font.BOLD, 15));
+		lbldangxuat.setBounds(57, 0, 166, 37);
 		Paneldangxuat.add(lbldangxuat);
 
 		Paneldoithongtin = new JPanel();
 		Paneldoithongtin.setLayout(null);
 		Paneldoithongtin.setBorder(null);
 		Paneldoithongtin.setBackground(new Color(0, 128, 64));
-		Paneldoithongtin.setBounds(10, 636, 297, 47);
+		Paneldoithongtin.setBounds(10, 603, 297, 37);
 		panel.add(Paneldoithongtin);
 		Paneldoithongtin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		
+		
+		JLabel lblDoiThongTin = new JLabel("ĐỔI THÔNG TIN");
+		lblDoiThongTin.setBounds(57, 0, 199, 37);
+		Paneldoithongtin.add(lblDoiThongTin);
+		lblDoiThongTin.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/doimatkhau_24.png")));
+		lblDoiThongTin.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDoiThongTin.setForeground(Color.WHITE);
+		lblDoiThongTin.setFont(new Font("Verdana", Font.BOLD, 15));
 		Paneldoithongtin.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				DoiThongTinMousePressed(e);
@@ -387,13 +403,35 @@ public class QuanLyKho extends JFrame {
 		});
 		
 		
-		JLabel lblDoiThongTin = new JLabel("ĐỔI THÔNG TIN");
-		lblDoiThongTin.setIcon(new ImageIcon(QuanLyKho.class.getResource("/com/quanlikho/Item/doimatkhau_24.png")));
-		lblDoiThongTin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDoiThongTin.setForeground(Color.WHITE);
-		lblDoiThongTin.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblDoiThongTin.setBounds(55, 0, 199, 47);
-		Paneldoithongtin.add(lblDoiThongTin);
+		 PanelDaiLy = new JPanel();
+		PanelDaiLy.setLayout(null);
+		PanelDaiLy.setBorder(null);
+		PanelDaiLy.setBackground(new Color(0, 128, 64));
+		PanelDaiLy.setBounds(10, 492, 297, 37);
+		panel.add(PanelDaiLy);
+		PanelDaiLy.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				DaiLyMousePressed(e);
+			}
+
+			public void mouseClicked(MouseEvent e) {
+				DaiLyMouseClicked(e);
+			}
+		});
+		
+		 lbliL = new JLabel("ĐẠI LÝ");
+		lbliL.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/company_24.png")));
+		lbliL.setHorizontalAlignment(SwingConstants.LEFT);
+		lbliL.setForeground(Color.WHITE);
+		lbliL.setFont(new Font("Verdana", Font.BOLD, 15));
+		lbliL.setBounds(57, 0, 166, 37);
+		PanelDaiLy.add(lbliL);
+		
+		JLabel lblNewLabel_1 = new JLabel("Xin Chào:");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblNewLabel_1.setBounds(10, 47, 89, 47);
+		panel.add(lblNewLabel_1);
 
 	}
 
@@ -403,10 +441,12 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		sanPham = new SanPham();
 		MainContent.add(sanPham).setVisible(true);
@@ -430,10 +470,12 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(ClickedColor);
+		PanelPhanLoai.setBackground(ClickedColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phanLoai = new PhanLoai();
 		MainContent.add(phanLoai).setVisible(true);
@@ -457,15 +499,18 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(ClickedColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		nhapHang = new NhapHang();
 		MainContent.add(nhapHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		nhapHang.txtVvjvjv_1.setText(lblTen.getText());
 
 	}
 
@@ -476,6 +521,7 @@ public class QuanLyKho extends JFrame {
 		MainContent.add(nhapHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		nhapHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
 
 	public void PhieuNhapMousePressed(MouseEvent evt) {
@@ -484,12 +530,15 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phieuNhap = new PhieuNhap();
+		
 		MainContent.add(phieuNhap).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
@@ -510,10 +559,12 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(ClickedColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phieuXuat = new PhieuXuat();
 		MainContent.add(phieuXuat).setVisible(true);
@@ -536,10 +587,12 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(ClickedColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		thongKe = new ThongKe();
 		MainContent.add(thongKe).setVisible(true);
@@ -562,10 +615,12 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(ClickedColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+	
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		tonKho = new TonKho();
 		MainContent.add(tonKho).setVisible(true);
@@ -588,16 +643,18 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(ClickedColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(DefaultColor);
+		
+		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		xuatHang = new XuatHang();
 		MainContent.add(xuatHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
-
+		xuatHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
 
 	public void XuatHangMouseClicked(MouseEvent evt) {
@@ -607,6 +664,7 @@ public class QuanLyKho extends JFrame {
 		MainContent.add(xuatHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		xuatHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
 	public void DoiThongTinMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
@@ -614,13 +672,52 @@ public class QuanLyKho extends JFrame {
 		PanelNhapHang.setBackground(DefaultColor);
 		PanelXuatHang.setBackground(DefaultColor);
 		PanelPhieuXuat.setBackground(DefaultColor);
-		PanelNhaCungCap.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
 		PanelTonKho.setBackground(DefaultColor);
 		PanelThongKe.setBackground(DefaultColor);
 		Paneldoithongtin.setBackground(ClickedColor);
-
+		
+		PanelDaiLy.setBackground(DefaultColor);
 		doiThongTin = new DoiThongTin();
 		doiThongTin.setVisible(true);
+		
+		AccountBUS accBUS = new AccountBUS();
+		if (accBUS.getList() == null)
+			accBUS.list();
+		doiThongTin.textFieldTenDangNhap.setText(lblTen.getText());
+		doiThongTin.textFieldHovaTen.setText(accBUS.PutOnHovaTen(lblTen.getText()));
+	
+		doiThongTin.textFieldEmail.setText(accBUS.PutOnEmail(lblTen.getText()));
+		doiThongTin.textFieldRole.setText(accBUS.PutOnRole(lblTen.getText()));
+		
+	}
+	public void DaiLyMousePressed(MouseEvent evt) {
+		PanelSanPham.setBackground(DefaultColor);
+		PanelPhieuNhap.setBackground(DefaultColor);
+		PanelNhapHang.setBackground(DefaultColor);
+		PanelXuatHang.setBackground(DefaultColor);
+		PanelPhieuXuat.setBackground(DefaultColor);
+		PanelPhanLoai.setBackground(DefaultColor);
+		PanelTonKho.setBackground(DefaultColor);
+		PanelThongKe.setBackground(DefaultColor);
+		Paneldoithongtin.setBackground(DefaultColor);
+		
+		PanelDaiLy.setBackground(ClickedColor);
+		MainContent.removeAll();
+		daiLy = new DaiLy();
+		MainContent.add(daiLy).setVisible(true);
+		MainContent.revalidate();
+		MainContent.repaint();
+
+	}
+
+	public void DaiLyMouseClicked(MouseEvent evt) {
+		// TODO add your handling code here:
+		MainContent.removeAll();
+		daiLy = new DaiLy();
+		MainContent.add(daiLy).setVisible(true);
+		MainContent.revalidate();
+		MainContent.repaint();
 	}
 	
 }

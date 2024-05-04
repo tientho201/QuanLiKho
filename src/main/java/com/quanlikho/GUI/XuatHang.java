@@ -44,7 +44,7 @@ public class XuatHang extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField txtVvjvjv;
-	private JTextField txtVvjvjv_1;
+	public JTextField txtVvjvjv_1;
 	private JTable table_1;
 	private JLabel lblNewLabel_3;
 	private JTextField text_SL;
@@ -58,6 +58,8 @@ public class XuatHang extends JPanel {
 	private JButton btnNewButton_5;
 	private int currentSTT = 1;
 	private JComboBox comboBox;
+        private JComboBox comboBox_1;
+	private JTextField textField_5;
 	private JTable table;
 
 
@@ -85,7 +87,7 @@ public class XuatHang extends JPanel {
 		btnNewButton.setBounds(332, 23, 121, 29);
 		panel.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("Mã phiếu nhập");
+		JLabel lblNewLabel = new JLabel("Mã phiếu xuất");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel.setBounds(548, 22, 127, 30);
 		add(lblNewLabel);
@@ -97,7 +99,7 @@ public class XuatHang extends JPanel {
 		
 		JLabel lblNewLabel_2 = new JLabel("Người tạo phiếu");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_2.setBounds(548, 95, 171, 44);
+		lblNewLabel_2.setBounds(548, 147, 171, 44);
 		add(lblNewLabel_2);
 		
 		txtVvjvjv = new JTextField();
@@ -111,7 +113,7 @@ public class XuatHang extends JPanel {
 		txtVvjvjv_1.setEnabled(false);
 		txtVvjvjv_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtVvjvjv_1.setColumns(10);
-		txtVvjvjv_1.setBounds(758, 103, 300, 30);
+		txtVvjvjv_1.setBounds(758, 161, 300, 30);
 		add(txtVvjvjv_1);
 		
 		JTable table = new JTable(new DefaultTableModel(
@@ -122,7 +124,7 @@ public class XuatHang extends JPanel {
 	        	}
 	        ));
 	        JScrollPane scrollPane = new JScrollPane(table); 
-	        scrollPane.setBounds(25, 111, 491, 496);
+	        scrollPane.setBounds(25, 111, 491, 500);
 	        add(scrollPane, BorderLayout.CENTER); 
 		
 	        table_1 = new JTable(new DefaultTableModel(
@@ -133,20 +135,20 @@ public class XuatHang extends JPanel {
 	            	}
 	            ));
 	            JScrollPane scrollPane_1 = new JScrollPane(table_1); 
-	            scrollPane_1.setBounds(548, 149, 510, 376);
+	            scrollPane_1.setBounds(548, 216, 510, 331);
 	            add(scrollPane_1, BorderLayout.CENTER); 
 		
 		lblNewLabel_3 = new JLabel("Số lượng");
 		lblNewLabel_3.setForeground(new Color(255, 0, 0));
 		lblNewLabel_3.setBackground(new Color(255, 255, 255));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(40, 642, 81, 24);
+		lblNewLabel_3.setBounds(45, 641, 81, 24);
 		add(lblNewLabel_3);
 		
 		text_SL = new JTextField("1");
 		text_SL.setHorizontalAlignment(SwingConstants.CENTER);
 		text_SL.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		text_SL.setBounds(179, 639, 97, 31);
+		text_SL.setBounds(174, 638, 97, 31);
 		add(text_SL);
 		text_SL.setColumns(10);
 		
@@ -155,34 +157,34 @@ public class XuatHang extends JPanel {
 		btnNewButton_1.setBackground(new Color(247, 234, 148));
 		btnNewButton_1.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/plus.png")));
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1.setBounds(351, 639, 109, 30);
+		btnNewButton_1.setBounds(373, 638, 109, 30);
 		add(btnNewButton_1);
 		
 		lblNewLabel_4 = new JLabel("Thành tiền");
 		lblNewLabel_4.setForeground(Color.RED);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_4.setBackground(Color.WHITE);
-		lblNewLabel_4.setBounds(548, 642, 81, 24);
+		lblNewLabel_4.setBounds(585, 641, 81, 24);
 		add(lblNewLabel_4);
 		
 		btnNewButton_2 = new JButton("Xuất hàng");
 		btnNewButton_2.setEnabled(false);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_2.setBackground(new Color(247, 234, 148));
-		btnNewButton_2.setBounds(911, 639, 127, 30);
+		btnNewButton_2.setBounds(906, 638, 127, 30);
 		add(btnNewButton_2);
 		
 		labThanhTien = new JLabel("0");
 		labThanhTien.setForeground(new Color(255, 0, 0));
 		labThanhTien.setFont(new Font("Tahoma", Font.BOLD, 14));
-		labThanhTien.setBounds(716, 641, 97, 27);
+		labThanhTien.setBounds(723, 640, 146, 27);
 		add(labThanhTien);
 		
 		btnNewButton_3 = new JButton("Xuất excel");
 		btnNewButton_3.setBackground(new Color(255, 255, 255));
 		btnNewButton_3.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/sheet.png")));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(548, 559, 171, 34);
+		btnNewButton_3.setBounds(548, 570, 171, 34);
 		add(btnNewButton_3);
 		
 		btnNewButton_4 = new JButton("Sửa số lượng");
@@ -190,19 +192,28 @@ public class XuatHang extends JPanel {
 		btnNewButton_4.setBackground(new Color(255, 255, 255));
 		btnNewButton_4.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/pencil.png")));
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_4.setBounds(741, 559, 160, 34);
+		btnNewButton_4.setBounds(746, 570, 137, 34);
 		add(btnNewButton_4);
 		
 		btnNewButton_5 = new JButton("Xóa sản phẩm");
 		btnNewButton_5.setBackground(new Color(255, 255, 255));
 		btnNewButton_5.setIcon(new ImageIcon(XuatHang.class.getResource("/com/quanlikho/Item/recycle-bin.png")));
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_5.setBounds(911, 559, 147, 34);
+		btnNewButton_5.setBounds(912, 570, 146, 34);
 		add(btnNewButton_5);
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(758, 63, 300, 30);
 		add(comboBox);
+                comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(758, 111, 300, 36);
+		add(comboBox_1);
+                
+                JLabel lblNewLabel_5 = new JLabel("Đại Lý");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_5.setBounds(548, 119, 65, 17);
+		add(lblNewLabel_5);
+		
 
 		JLabel lblVnd = new JLabel("VND");
 		lblVnd.setForeground(Color.RED);
@@ -304,6 +315,9 @@ public class XuatHang extends JPanel {
 		txtVvjvjv.setText(MaPX);
 
 		populateComboBoxMaNCC(comboBox);
+                
+		populateComboBoxMaDL(comboBox_1);
+		
 		
 		btnNewButton_4.addActionListener(new ActionListener() {
 			@Override
@@ -387,14 +401,15 @@ public class XuatHang extends JPanel {
 					//JOptionPane.showMessageDialog(XuatHang.this, "Bảng sản phẩm đang trống. Vui lòng chọn sản phẩm trước khi nhập hàng.");
 					return; 
 				}
-				int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn nhập hàng không?", "Xác nhận nhập hàng", JOptionPane.YES_NO_OPTION);
+				int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn xuất hàng không?", "Xác nhận xuất hàng", JOptionPane.YES_NO_OPTION);
 				if (option == JOptionPane.YES_OPTION) {
 					String maPhieuXuat = txtVvjvjv.getText();
 					String nhaCungCap = (String) comboBox.getSelectedItem();
+                                        String maDL = (String) comboBox_1.getSelectedItem();
 					LocalDate thoiGianTao = LocalDate.now(); // Lấy ngày hiện tại
 					String nguoiTaoPhieu = txtVvjvjv_1.getText();
 					String thanhTien = labThanhTien.getText();
-					ThemPhieuXuatVaoCSDL(maPhieuXuat, nhaCungCap, thoiGianTao, nguoiTaoPhieu, thanhTien);
+					ThemPhieuXuatVaoCSDL(maPhieuXuat, nhaCungCap, thoiGianTao, nguoiTaoPhieu, maDL, thanhTien);
 					ThemChiTietPhieuXuatVaoCSDL(maPhieuXuat);
 					reloadTable(table);
 					LamRongTableVaReloadTxt();
@@ -417,20 +432,21 @@ public class XuatHang extends JPanel {
 		String MaPX = generateMaPhieuXuat();
 		txtVvjvjv.setText(MaPX);
 	}
-	private void ThemPhieuXuatVaoCSDL(String maPhieuXuat, String nhaCungCap, LocalDate thoiGianTao, String nguoiTaoPhieu, String tongTien) {
+	private void ThemPhieuXuatVaoCSDL(String maPhieuXuat, String nhaCungCap, LocalDate thoiGianTao, String nguoiTaoPhieu, String MaDL,  String tongTien) {
 		ConnectJDBC connectJDBC = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {
 			connectJDBC = new ConnectJDBC();
 			connection = connectJDBC.getConnection();
-			pst = connection.prepareStatement("INSERT INTO PhieuXuat (MaPX, MaNCC, ThoiGianTao, TenDangNhap, TongTien) VALUES (?, ?, ?, ?, ?)");
+			pst = connection.prepareStatement("INSERT INTO PhieuXuat (MaPX, MaNCC, ThoiGianTao, TenDangNhap, MaDL, TongTien) VALUES (?, ?, ?, ?, ?, ?)");
 			pst.setString(1, maPhieuXuat);
 			pst.setString(2, nhaCungCap);
 			pst.setObject(3, thoiGianTao);
 			pst.setString(4, nguoiTaoPhieu);
+                        pst.setString(5, MaDL);
 			int tongTienInt = Integer.parseInt(tongTien);
-			pst.setInt(5, tongTienInt);
+			pst.setInt(6, tongTienInt);
 			pst.executeUpdate();
 
 			pst.close();
@@ -455,9 +471,9 @@ public class XuatHang extends JPanel {
 				preparedStatement.setString(1, maSP);
 				preparedStatement.setString(2, maPhieuXuat);
 				preparedStatement.setInt(3, donGiaXuat);
-				preparedStatement.setInt(4, -soLuong);
+				preparedStatement.setInt(4, soLuong);
 				preparedStatement.executeUpdate();
-				updateStatement.setInt(1, soLuong);
+				updateStatement.setInt(1, -soLuong);
 				updateStatement.setString(2, maSP);
 				updateStatement.executeUpdate();
 			}
@@ -553,6 +569,25 @@ public class XuatHang extends JPanel {
 			while (rs.next()) {
 				String maNCC = rs.getString("MaNCC");
 				comboBox.addItem(maNCC);
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+        
+        	private void populateComboBoxMaDL(JComboBox comboBox_1) {
+		try {
+			ConnectJDBC connectJDBC = new ConnectJDBC();
+			Connection connection = connectJDBC.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT MaDL FROM DaiLi");
+			comboBox_1.removeAllItems();
+			while (rs.next()) {
+				String maDL = rs.getString("MaDL");
+				comboBox_1.addItem(maDL);
 			}
 			rs.close();
 			statement.close();

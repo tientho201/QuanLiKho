@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
 import com.quanlikho.BUS.*;
 
-
 public class Admin extends JFrame {
 	Color DefaultColor = new Color(0, 128, 64);
 	Color ClickedColor = Color.GRAY;
@@ -39,19 +38,21 @@ public class Admin extends JFrame {
 	private SanPham sanPham;
 	private NhapHang nhapHang;
 	private PhieuNhap phieuNhap;
-	private PhieuXuat phieuXuat ; 
-	private ThongKe thongKe ; 
-	private TonKho tonKho ; 
-	private XuatHang xuatHang ;
-	private DoiThongTin doiThongTin ;
-	private DaiLy daiLy ; 
+	private PhieuXuat phieuXuat;
+	private ThongKe thongKe;
+	private TonKho tonKho;
+	private XuatHang xuatHang;
+
+	private DaiLy daiLy;
 	public JLabel lblTen;
 	private JPanel PanelAccount;
-	private JLabel lblAccount; 
-	private TaiKhoan taiKhoan ;
+	private JLabel lblAccount;
+	private TaiKhoan taiKhoan;
 	private JPanel PanelDaiLy;
-	private JLabel lbliL; 
-	
+	private JLabel lbliL;
+
+	private DoiThongTin doiThongTin;
+
 	/**
 	 * Launch the application.
 	 */
@@ -69,18 +70,15 @@ public class Admin extends JFrame {
 					final Admin frame = new Admin();
 					frame.setVisible(true);
 					frame.addWindowListener(new WindowAdapter() {
-					    public void windowClosing(WindowEvent e) {
-					        int result = JOptionPane.showConfirmDialog(frame,
-					                "Bạn có chắc muốn thoát?",
-					                "Xác nhận",
-					                JOptionPane.YES_NO_OPTION,
-					                JOptionPane.QUESTION_MESSAGE);
-					        if (result == JOptionPane.YES_OPTION) {
-					            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					        } else {
-					            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-					        }
-					    }
+						public void windowClosing(WindowEvent e) {
+							int result = JOptionPane.showConfirmDialog(frame, "Bạn có chắc muốn thoát?", "Xác nhận",
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+							if (result == JOptionPane.YES_OPTION) {
+								frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							} else {
+								frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+							}
+						}
 					});
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -94,12 +92,11 @@ public class Admin extends JFrame {
 	 */
 	public Admin() {
 
-		
 //		panel.setBounds(20, 10, 317, 750);
 //		panel_1.setBounds(327,10,1180,750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1406, 735);
-		setTitle("Quản Lý Kho");
+		setTitle("Admin");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -186,8 +183,7 @@ public class Admin extends JFrame {
 				PhieuNhapMouseClicked(e);
 			}
 		});
-		
-		
+
 		JLabel lblPhieuNhap = new JLabel("PHIẾU NHẬP");
 		lblPhieuNhap.setBounds(57, 0, 166, 37);
 		PanelPhieuNhap.add(lblPhieuNhap);
@@ -261,7 +257,6 @@ public class Admin extends JFrame {
 				XuatHangMouseClicked(e);
 			}
 		});
-		
 
 		JLabel lblXuatHang = new JLabel("XUẤT HÀNG");
 		lblXuatHang.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/XuatHang_24.png")));
@@ -287,8 +282,7 @@ public class Admin extends JFrame {
 				PhieuXuatMouseClicked(e);
 			}
 		});
-		
-		
+
 		JLabel lblPhieuXuat = new JLabel("PHIẾU XUẤT");
 		lblPhieuXuat.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/bill_24.png")));
 		lblPhieuXuat.setHorizontalAlignment(SwingConstants.LEFT);
@@ -359,20 +353,17 @@ public class Admin extends JFrame {
 		panel.add(Paneldangxuat);
 		Paneldangxuat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		Paneldangxuat.addMouseListener(new MouseAdapter() {
-		    public void mousePressed(MouseEvent e) {
-		        int result = JOptionPane.showConfirmDialog(null,
-		                "Bạn có chắc muốn đăng xuất?",
-		                "Xác nhận",
-		                JOptionPane.YES_NO_OPTION,
-		                JOptionPane.QUESTION_MESSAGE);
-		        if(result == JOptionPane.YES_OPTION){
-		            setVisible(false);
-		            login Login = new login();
-		            Login.setVisible(true);
-		        }
-		    }
+			public void mousePressed(MouseEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đăng xuất?", "Xác nhận",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (result == JOptionPane.YES_OPTION) {
+					setVisible(false);
+					login Login = new login();
+					Login.setVisible(true);
+				}
+			}
 		});
-			
+
 		JLabel lbldangxuat = new JLabel("ĐĂNG XUẤT");
 		lbldangxuat.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/logout_24.png")));
 		lbldangxuat.setHorizontalAlignment(SwingConstants.LEFT);
@@ -388,8 +379,7 @@ public class Admin extends JFrame {
 		Paneldoithongtin.setBounds(10, 603, 297, 37);
 		panel.add(Paneldoithongtin);
 		Paneldoithongtin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		
-		
+
 		JLabel lblDoiThongTin = new JLabel("ĐỔI THÔNG TIN");
 		lblDoiThongTin.setBounds(57, 0, 199, 37);
 		Paneldoithongtin.add(lblDoiThongTin);
@@ -402,9 +392,8 @@ public class Admin extends JFrame {
 				DoiThongTinMousePressed(e);
 			}
 
-		
 		});
-		
+
 		PanelAccount = new JPanel();
 		PanelAccount.setLayout(null);
 		PanelAccount.setBorder(null);
@@ -421,8 +410,7 @@ public class Admin extends JFrame {
 				AccountMouseClicked(e);
 			}
 		});
-		
-		
+
 		lblAccount = new JLabel("TÀi KHOẢN");
 		lblAccount.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/accountable_24.png")));
 		lblAccount.setHorizontalAlignment(SwingConstants.LEFT);
@@ -430,9 +418,8 @@ public class Admin extends JFrame {
 		lblAccount.setFont(new Font("Verdana", Font.BOLD, 15));
 		lblAccount.setBounds(57, 0, 166, 37);
 		PanelAccount.add(lblAccount);
-		
-		
-		 PanelDaiLy = new JPanel();
+
+		PanelDaiLy = new JPanel();
 		PanelDaiLy.setLayout(null);
 		PanelDaiLy.setBorder(null);
 		PanelDaiLy.setBackground(new Color(0, 128, 64));
@@ -447,15 +434,15 @@ public class Admin extends JFrame {
 				DaiLyMouseClicked(e);
 			}
 		});
-		
-		 lbliL = new JLabel("ĐẠI LÝ");
+
+		lbliL = new JLabel("ĐẠI LÝ");
 		lbliL.setIcon(new ImageIcon(Admin.class.getResource("/com/quanlikho/Item/company_24.png")));
 		lbliL.setHorizontalAlignment(SwingConstants.LEFT);
 		lbliL.setForeground(Color.WHITE);
 		lbliL.setFont(new Font("Verdana", Font.BOLD, 15));
 		lbliL.setBounds(57, 0, 166, 37);
 		PanelDaiLy.add(lbliL);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Xin Chào:");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -567,7 +554,7 @@ public class Admin extends JFrame {
 		PanelDaiLy.setBackground(DefaultColor);
 		MainContent.removeAll();
 		phieuNhap = new PhieuNhap();
-		
+
 		MainContent.add(phieuNhap).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
@@ -582,6 +569,7 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
 	public void PhieuXuatMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -610,6 +598,7 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
 	public void ThongKeMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -638,6 +627,7 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
 	public void TonKhoMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -666,6 +656,7 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
 	public void XuatHangMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -683,7 +674,7 @@ public class Admin extends JFrame {
 		MainContent.add(xuatHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
-
+		xuatHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
 
 	public void XuatHangMouseClicked(MouseEvent evt) {
@@ -693,7 +684,9 @@ public class Admin extends JFrame {
 		MainContent.add(xuatHang).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+		xuatHang.txtVvjvjv_1.setText(lblTen.getText());
 	}
+
 	public void DoiThongTinMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -708,7 +701,17 @@ public class Admin extends JFrame {
 		PanelDaiLy.setBackground(DefaultColor);
 		doiThongTin = new DoiThongTin();
 		doiThongTin.setVisible(true);
+		AccountBUS accBUS = new AccountBUS();
+		if (accBUS.getList() == null)
+			accBUS.list();
+		doiThongTin.textFieldTenDangNhap.setText(lblTen.getText());
+		doiThongTin.textFieldHovaTen.setText(accBUS.PutOnHovaTen(lblTen.getText()));
+	
+		doiThongTin.textFieldEmail.setText(accBUS.PutOnEmail(lblTen.getText()));
+		doiThongTin.textFieldRole.setText(accBUS.PutOnRole(lblTen.getText()));
+
 	}
+
 	public void AccountMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -737,6 +740,7 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
 	public void DaiLyMousePressed(MouseEvent evt) {
 		PanelSanPham.setBackground(DefaultColor);
 		PanelPhieuNhap.setBackground(DefaultColor);
@@ -765,5 +769,5 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
-	
+
 }
