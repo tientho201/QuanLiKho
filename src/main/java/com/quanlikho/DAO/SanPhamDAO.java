@@ -105,6 +105,8 @@ public class SanPhamDAO {
 	    }
 	}
 
+
+	
 	public boolean checkDataIsReferenced(String maSP) {
 		String CHECK_REFERENCED_QUERY = "SELECT COUNT(*) FROM ChiTietPN WHERE MaSP = ? UNION SELECT COUNT(*) FROM ChiTietPX WHERE MaSP = ?";
 	    try (Connection connection = connectJDBC.getConnection();

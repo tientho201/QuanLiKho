@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
 
 import javax.swing.JFileChooser;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -32,10 +34,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.quanlikho.BUS.*;
 import com.quanlikho.DTO.*;
@@ -59,6 +66,7 @@ public class DaiLy extends JPanel {
 	private JTextField textFieldSoDienThoai;
 	private JComboBox comboBoxTrangThai;
 	private JTextField textFieldDiaChi;
+	private JComboBox comboBox;
 
 	/**
 	 * Create the panel.
@@ -170,7 +178,8 @@ public class DaiLy extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 
-		JComboBox comboBox = new JComboBox();
+		 comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mã đại lý", "Tên đại lý"}));
 		comboBox.setBounds(30, 45, 158, 41);
 		panel.add(comboBox);
 
@@ -179,9 +188,28 @@ public class DaiLy extends JPanel {
 		panel.add(textField);
 		textField.setColumns(10);
 
+		textField.getDocument().addDocumentListener((DocumentListener) new DocumentListener() {
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	            	timKiem();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	            	timKiem();
+	            }
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+	        });
+		
 		JButton btnLamMoi = new JButton("Làm mới");
 		btnLamMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Reload();
 			}
 		});
 		btnLamMoi.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -325,6 +353,8 @@ public class DaiLy extends JPanel {
 		textFieldSoDienThoai.setText("");
 		comboBoxTrangThai.setSelectedIndex(0);
 		textFieldDiaChi.setText("");
+		textField.setText("");
+		comboBox.setSelectedIndex(0);
 		DaiLiBUS dlBUSreload = new DaiLiBUS();
 		if (dlBUSreload.getList() == null) {
 			dlBUSreload.list();
@@ -478,5 +508,25 @@ public class DaiLy extends JPanel {
 	            System.out.println(e);
 	        }
 	    }
+	  public void timKiem() {
+		  	String text = textField.getText();
+	        int columnIndex = comboBox.getSelectedIndex(); 
+	       
+	        TableRowSorter<? extends TableModel> sorter = (TableRowSorter<? extends TableModel>) table.getRowSorter();
 
+	        if (sorter == null) {
+	            sorter = new TableRowSorter<>(table.getModel());
+	            table.setRowSorter(sorter);
+	        }
+
+	        if (text.trim().length() == 0) {
+	            sorter.setRowFilter(null);
+	        } else {
+	            try {
+	                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, columnIndex));
+	            } catch (PatternSyntaxException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	  }
 }

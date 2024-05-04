@@ -9,8 +9,10 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,6 +27,18 @@ import javax.swing.table.DefaultTableModel;
 import com.quanlikho.Connect.*;
 
 import javax.swing.ImageIcon;
+
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JFileChooser;
 
 public class ChiTietPhieuXuat extends JDialog {
 
@@ -178,6 +192,16 @@ public class ChiTietPhieuXuat extends JDialog {
 		panel_3.add(lblVnd);
 		
 		JButton btnNewPDF = new JButton("Xuất PDF");
+		btnNewPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			    int result = fileChooser.showSaveDialog(null);
+			    if (result == JFileChooser.APPROVE_OPTION) {
+			        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+			       exportToPDF(table, filePath + ".pdf");
+			    }
+			}
+		});
 		btnNewPDF.setIcon(new ImageIcon(ChiTietPhieuXuat.class.getResource("/com/quanlikho/Item/pdf.png")));
 		btnNewPDF.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewPDF.setBounds(640, 0, 142, 47);
@@ -243,7 +267,36 @@ public class ChiTietPhieuXuat extends JDialog {
 		}
 	
 	}
-	
+
+	    public static void exportToPDF(JTable table, String filePath) {
+	        try {
+	            PdfWriter writer = new PdfWriter(filePath);
+	            PdfDocument pdf = new PdfDocument(writer);
+	            Document document = new Document(pdf);
+	            document.setMargins(20, 20, 20, 20);
+
+	            Table pdfTable = new Table(table.getColumnCount());
+	            pdfTable.setWidth(UnitValue.createPercentValue(100));
+
+	            DefaultTableModel model = (DefaultTableModel) table.getModel();
+	            for (int row = 0; row < model.getRowCount(); row++) {
+	                for (int column = 0; column < model.getColumnCount(); column++) {
+	                    pdfTable.addCell(new Cell().add(new com.itextpdf.layout.element.Paragraph(model.getValueAt(row, column).toString())));
+	                }
+	            }
+
+	            for (int i = 0; i < table.getColumnCount(); i++) {
+	                pdfTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
+	            }
+
+	            document.add(pdfTable);
+	            document.close();
+
+	            JOptionPane.showMessageDialog(null, "Exported successfully to " + filePath);
+	        } catch (FileNotFoundException e) {
+	            JOptionPane.showMessageDialog(null, "Error exporting to PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	        }
+	    }
 	
 	
 }

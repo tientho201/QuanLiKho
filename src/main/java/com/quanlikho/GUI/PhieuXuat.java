@@ -217,7 +217,7 @@ public class PhieuXuat extends JPanel {
 
         // Truy vấn dữ liệu từ bảng PhieuXuat và thêm vào DefaultTableModel
         try {
-            ConnectJDBC connectJDBC = new ConnectJDBC();
+        	 ConnectJDBC connectJDBC = new ConnectJDBC();
             Connection connection = connectJDBC.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM PhieuXuat");
             ResultSet resultSet = statement.executeQuery();

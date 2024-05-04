@@ -59,7 +59,7 @@ public class LoaiBUS {
         }
     }
     public boolean checkMaLoai(String maLoai) {
-        for (LoaiDTO loai : getList()) {
+        for (LoaiDTO loai : ds) {
             if (loai.getMaLoai().equals(maLoai)) {
                 return true; // Mã nhà sản xuất đã tồn tại
             }

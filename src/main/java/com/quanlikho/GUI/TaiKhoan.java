@@ -2,7 +2,10 @@ package com.quanlikho.GUI;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JToolBar;
+import javax.swing.RowFilter;
 import javax.swing.JButton;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -20,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
 import java.awt.Component;
 import java.awt.Desktop;
 
@@ -30,6 +34,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -62,6 +68,7 @@ public class TaiKhoan extends JPanel {
 	private JComboBox comboBoxTrangThai;
 	private JComboBox comboBoxVaiTro;
 	private JPasswordField passwordField;
+	private JComboBox comboBox;
 
 	/**
 	 * Create the panel.
@@ -145,6 +152,7 @@ public class TaiKhoan extends JPanel {
 		JButton btnNhapExcel = new JButton("Nhập Excel");
 		btnNhapExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				NhapExcel();
 			}
 		});
 		btnNhapExcel.setIcon(new ImageIcon(TaiKhoan.class.getResource("/com/quanlikho/Item/logo_excel_32.png")));
@@ -173,7 +181,8 @@ public class TaiKhoan extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 
-		JComboBox comboBox = new JComboBox();
+		 comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tên đăng nhập", "Họ và tên", "Role"}));
 		comboBox.setBounds(30, 45, 158, 41);
 		panel.add(comboBox);
 
@@ -181,8 +190,30 @@ public class TaiKhoan extends JPanel {
 		textField.setBounds(218, 45, 219, 41);
 		panel.add(textField);
 		textField.setColumns(10);
+		textField.getDocument().addDocumentListener((DocumentListener) new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	timKiem();
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	timKiem();
+            }
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
+		
 		JButton btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reload();
+			}
+		});
 		btnLamMoi.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnLamMoi.setIcon(new ImageIcon(TaiKhoan.class.getResource("/com/quanlikho/Item/reload_32.png")));
 		btnLamMoi.setBounds(461, 43, 139, 43);
@@ -348,7 +379,8 @@ public class TaiKhoan extends JPanel {
 		textFieldEmail.setText("");
 		comboBoxTrangThai.setSelectedIndex(0);
 		comboBoxVaiTro.setSelectedIndex(0);
-		
+		textField.setText("");
+		comboBox.setSelectedIndex(0);
 		passwordField.setText("");
 		AccountBUS accBUSreload = new AccountBUS();
 		if (accBUSreload.getList() == null) {
@@ -546,4 +578,40 @@ public class TaiKhoan extends JPanel {
 	            System.out.println(e);
 	        }
 	    }
+	  public void timKiem() {
+		 
+	        int columnIndex = comboBox.getSelectedIndex(); 
+	       switch(columnIndex) {
+	       	case 0:
+	       		search(0);
+	       		break;
+	       	case 1:
+	       		search(1);	break;
+	       	case 2:
+	       		search(4);	break;
+	       	default:
+	       	    break;
+	       }
+	    
+	  }
+	  public void search(int number) {
+		  String text = textField.getText();
+		    TableRowSorter<? extends TableModel> sorter = (TableRowSorter<? extends TableModel>) table.getRowSorter();
+
+	        if (sorter == null) {
+	            sorter = new TableRowSorter<>(table.getModel());
+	            table.setRowSorter(sorter);
+	        }
+
+	        if (text.trim().length() == 0) {
+	            sorter.setRowFilter(null);
+	        } else {
+	            try {
+	                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, number));
+	            } catch (PatternSyntaxException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	  }
+	  
 }

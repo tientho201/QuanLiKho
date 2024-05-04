@@ -59,7 +59,7 @@ public class NhaSanXuatBUS {
         }
     }
     public boolean checkMaNSX(String maNSX) {
-        for (NhaSanXuatDTO nsx : getList()) {
+        for (NhaSanXuatDTO nsx : ds) {
             if (nsx.getMaNSX().equals(maNSX)) {
                 return true; // Mã nhà sản xuất đã tồn tại
             }

@@ -581,12 +581,12 @@ public class SanPham extends JPanel {
 					String GhiChu = excelRow.getCell(6).getStringCellValue();
 					String trangThai = excelRow.getCell(7).getStringCellValue();
 
-					if (loaiBUS.checkMaLoai(MaLoai)) {
+					if (!loaiBUS.checkMaLoai(MaLoai)) {
 						JOptionPane.showMessageDialog(null, "Mã Loại không tồn tại!", "Thông báo",
 								JOptionPane.DEFAULT_OPTION);
 						return;
 					} else {
-						if (nsxBUS.checkMaNSX(MaNSX)) {
+						if (!nsxBUS.checkMaNSX(MaNSX)) {
 							JOptionPane.showMessageDialog(null, "Nhà Sản Xuất không tồn tại!", "Thông báo",
 									JOptionPane.DEFAULT_OPTION);
 							return;

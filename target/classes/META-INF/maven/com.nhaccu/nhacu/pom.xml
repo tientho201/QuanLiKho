@@ -2,17 +2,17 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.quanlikho</groupId>
-  <artifactId>quanlikho</artifactId>
+  <groupId>com.nhaccu</groupId>
+  <artifactId>nhacu</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>quanlikho</name>
+  <name>nhacu</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <itext.version>8.0.3</itext.version>
+     <itext.version>8.0.3</itext.version>
   </properties>
 
   <dependencies>
@@ -27,6 +27,13 @@
         <artifactId>poi</artifactId>
         <version>5.2.3</version> <!-- Replace with the latest version -->
     </dependency>
+   
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itext-core</artifactId>
+    <version>8.0.3</version>
+    <type>pom</type>
+</dependency>
     <dependency>
         <groupId>org.apache.poi</groupId>
         <artifactId>poi-ooxml</artifactId>
@@ -95,11 +102,6 @@
         <groupId>com.itextpdf</groupId>
         <artifactId>hyph</artifactId>
         <version>${itext.version}</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.nhaccu</groupId>
-    	<artifactId>nhacu</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
