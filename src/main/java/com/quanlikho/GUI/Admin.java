@@ -132,7 +132,7 @@ public class Admin extends JFrame {
 
 		lblTen = new JLabel("");
 		lblTen.setForeground(new Color(255, 255, 255));
-		lblTen.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTen.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblTen.setBounds(93, 47, 214, 47);
 		panel.add(lblTen);

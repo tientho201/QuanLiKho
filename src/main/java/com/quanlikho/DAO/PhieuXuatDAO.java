@@ -110,7 +110,7 @@ public class PhieuXuatDAO implements DAOInterface<PhieuXuatDTO>{
             while (rs.next()) {
             String maPhieu = rs.getString("MaPX");
             Timestamp thoiGianTao = rs.getTimestamp("ThoiGianTao");
-            String nguoiTao = rs.getString("TenDangXuat");
+            String nguoiTao = rs.getString("TenDangNhap");
             String maNhaCungCap = rs.getString("MaNCC");
             String MaDaiLi= rs.getString("MaDL");  
             double tongTien = rs.getDouble("TongTien");
@@ -133,7 +133,7 @@ public class PhieuXuatDAO implements DAOInterface<PhieuXuatDTO>{
             while (rs.next()) {
                 String maPhieu = rs.getString("MaPX");
                 Timestamp thoiGianTao = rs.getTimestamp("ThoiGianTao");
-                String nguoiTao = rs.getString("TenDangXuat");
+                String nguoiTao = rs.getString("TenDangNhap");
                 String MaDaiLi= rs.getString("MaDL");  
                 double tongTien = rs.getDouble("TongTien");
                 PhieuDTO p= new PhieuDTO(maPhieu, thoiGianTao, nguoiTao, MaDaiLi,ChiTietPhieuXuatDAO.getInstance().selectAll(maPhieu), tongTien);
@@ -155,7 +155,7 @@ public class PhieuXuatDAO implements DAOInterface<PhieuXuatDTO>{
             while (rs.next()) {
                 String maPhieu = rs.getString("MaPX");
                 Timestamp thoiGianTao=rs.getTimestamp("ThoiGianTao");
-                String nguoiTao = rs.getString("TenDangXuat");
+                String nguoiTao = rs.getString("TenDangNhap");
                 String MaDaiLi= rs.getString("MaDL");  
                 double tongTien = rs.getDouble("TongTien");
                 PhieuDTO p=new PhieuDTO( maPhieu, thoiGianTao, nguoiTao, MaDaiLi,ChiTietPhieuXuatDAO.getInstance().selectAll(maPhieu),tongTien);

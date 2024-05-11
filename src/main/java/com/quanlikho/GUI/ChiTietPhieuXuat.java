@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.quanlikho.Connect.*;
-
+import com.quanlikho.controller.*;
 import javax.swing.ImageIcon;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -194,12 +194,8 @@ public class ChiTietPhieuXuat extends JDialog {
 		JButton btnNewPDF = new JButton("Xuất PDF");
 		btnNewPDF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-			    int result = fileChooser.showSaveDialog(null);
-			    if (result == JFileChooser.APPROVE_OPTION) {
-			        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-			       exportToPDF(table, filePath + ".pdf");
-			    }
+				  WritePDF writepdf = new WritePDF();
+			       writepdf.writePhieuXuat(maPX, lblNewLabelNguoiTao.getText());
 			}
 		});
 		btnNewPDF.setIcon(new ImageIcon(ChiTietPhieuXuat.class.getResource("/com/quanlikho/Item/pdf.png")));

@@ -53,7 +53,6 @@ public class NhapHang extends JPanel {
 	private JLabel lblNewLabel_4;
 	private JButton btnNewButton_2;
 	private JLabel labThanhTien;
-	private JButton btnNewButton_3;
 	private JButton btnNewButton_4;
 	private JButton btnNewButton_5;
 	private int currentSTT = 1;
@@ -178,26 +177,19 @@ public class NhapHang extends JPanel {
 		labThanhTien.setBounds(694, 654, 160, 27);
 		add(labThanhTien);
 		
-		btnNewButton_3 = new JButton("Nhập excel");
-		btnNewButton_3.setBackground(new Color(255, 255, 255));
-		btnNewButton_3.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/sheet.png")));
-		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(548, 575, 171, 34);
-		add(btnNewButton_3);
-		
 		btnNewButton_4 = new JButton("Sửa số lượng");
 		btnNewButton_4.setEnabled(false);
 		btnNewButton_4.setBackground(new Color(255, 255, 255));
 		btnNewButton_4.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/pencil.png")));
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_4.setBounds(743, 575, 150, 34);
+		btnNewButton_4.setBounds(601, 575, 150, 34);
 		add(btnNewButton_4);
 		
 		btnNewButton_5 = new JButton("Xóa sản phẩm");
 		btnNewButton_5.setBackground(new Color(255, 255, 255));
 		btnNewButton_5.setIcon(new ImageIcon(NhapHang.class.getResource("/com/quanlikho/Item/recycle-bin.png")));
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_5.setBounds(912, 575, 150, 34);
+		btnNewButton_5.setBounds(889, 575, 150, 34);
 		add(btnNewButton_5);
 		
 		comboBox = new JComboBox();

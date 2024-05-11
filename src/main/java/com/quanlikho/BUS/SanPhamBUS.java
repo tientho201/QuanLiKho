@@ -151,5 +151,23 @@ public class SanPhamBUS {
 		 }
 		 return countSP ; 
 	}
+	public String PutOnTenSP(String maSP) {
+		 for (SanPhamDTO sp : ds) {
+			 if(sp.getMaSP().equals(maSP)) {
+				 return sp.getTenSP();
+			 }
+			 
+		 }
+		 return null ; 
+	}
+	public int PutOnGia(String maSP) {
+		 for (SanPhamDTO sp : ds) {
+			 if(sp.getMaSP().equals(maSP)) {
+				 return sp.getGia();
+			 }
+			 
+		 }
+		 return 0 ; 
+	}
 }
 
