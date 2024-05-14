@@ -170,3 +170,18 @@ INSERT INTO ChiTietPX(MaSP , MaPX , DonGiaXuat , SoLuong   ) VALUES
 ('SP6' , 'PX0002' , 652000 , 5 ),
 ('SP7' , 'PX0002' , 625000 , 5 );
 
+
+SELECT 
+    sp.MaSP,
+    sp.TenSP,
+    ISNULL(COUNT(DISTINCT ctpn.MaPN), 0) AS SoLuongPhieuNhap,
+    ISNULL(COUNT(DISTINCT ctpx.MaPX), 0) AS SoLuongPhieuXuat
+FROM 
+    SanPham sp
+LEFT JOIN 
+    ChiTietPN ctpn ON sp.MaSP = ctpn.MaSP
+LEFT JOIN 
+    ChiTietPX ctpx ON sp.MaSP = ctpx.MaSP
+GROUP BY 
+    sp.MaSP,
+    sp.TenSP;

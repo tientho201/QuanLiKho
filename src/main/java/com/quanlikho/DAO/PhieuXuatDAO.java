@@ -166,4 +166,21 @@ public class PhieuXuatDAO implements DAOInterface<PhieuXuatDTO>{
         }
         return ketQua;
     }
+    public Timestamp getThoiGianTao(PhieuXuatDTO phieuXuat) {
+        Timestamp thoiGianTao = null;
+        try {
+            ConnectJDBC connectJDBC = new ConnectJDBC();
+            String sql = "SELECT ThoiGianTao FROM PhieuXuat WHERE MaPX=?";
+            PreparedStatement pst = connectJDBC.getConnection().prepareStatement(sql);
+            pst.setString(1, phieuXuat.getMaPhieu());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                thoiGianTao = rs.getTimestamp("ThoiGianTao");
+            }
+            connectJDBC.disConnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return thoiGianTao;
+    }
 }

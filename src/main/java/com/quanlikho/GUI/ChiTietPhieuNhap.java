@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -13,9 +15,16 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.quanlikho.BUS.*;
 import com.quanlikho.DTO.*;
-
+import com.quanlikho.controller.WritePDF;
 
 import java.awt.Color;
 
@@ -23,6 +32,11 @@ import javax.swing.table.DefaultTableModel;
 
 
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.awt.event.ActionEvent;
 
 public class ChiTietPhieuNhap extends JFrame {
 
@@ -169,7 +183,7 @@ public class ChiTietPhieuNhap extends JFrame {
 		JLabel lblNewLabel_1_4 = new JLabel("Tổng tiền");
 		lblNewLabel_1_4.setForeground(new Color(255, 0, 0));
 		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_4.setBounds(219, 15, 80, 21);
+		lblNewLabel_1_4.setBounds(20, 20, 80, 21);
 		lblNewLabel_1_4.setFont(new Font("Dialog", Font.BOLD, 16));
 		panel_3.add(lblNewLabel_1_4);
 		
@@ -177,14 +191,26 @@ public class ChiTietPhieuNhap extends JFrame {
 		lblNewLabelTongTien.setForeground(new Color(255, 0, 0));
 		lblNewLabelTongTien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabelTongTien.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabelTongTien.setBounds(309, 10, 134, 31);
+		lblNewLabelTongTien.setBounds(145, 10, 134, 31);
 		panel_3.add(lblNewLabelTongTien);
 		
 		JLabel lblNewLabel_1_6 = new JLabel("VND");
 		lblNewLabel_1_6.setForeground(new Color(255, 0, 0));
 		lblNewLabel_1_6.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabel_1_6.setBounds(453, 10, 107, 31);
+		lblNewLabel_1_6.setBounds(289, 15, 107, 31);
 		panel_3.add(lblNewLabel_1_6);
+		
+		JButton btnNewPDF = new JButton("Xuất PDF");
+		btnNewPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 WritePDF writepdf = new WritePDF();
+			       writepdf.writePhieuNhap(lblNewLabeMaPN.getText(), lblNewLabelNguoiTao.getText() ,lblNewLabelNgayTao.getText()  , lblNewLabelTongTien.getText());
+			}
+		});
+		btnNewPDF.setIcon(new ImageIcon(ChiTietPhieuNhap.class.getResource("/com/quanlikho/Item/pdf.png")));
+		btnNewPDF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewPDF.setBounds(570, -1, 142, 47);
+		panel_3.add(btnNewPDF);
 
 	}
 	public void capNhatBang(String MaPNH) {
@@ -204,4 +230,34 @@ public class ChiTietPhieuNhap extends JFrame {
 			});
 		}
 	}
+	public static void exportToPDF(JTable table, String filePath) {
+        try {
+            PdfWriter writer = new PdfWriter(filePath);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            document.setMargins(20, 20, 20, 20);
+
+            Table pdfTable = new Table(table.getColumnCount());
+            pdfTable.setWidth(UnitValue.createPercentValue(100));
+
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            for (int row = 0; row < model.getRowCount(); row++) {
+                for (int column = 0; column < model.getColumnCount(); column++) {
+                    pdfTable.addCell(new Cell().add(new com.itextpdf.layout.element.Paragraph(model.getValueAt(row, column).toString())));
+                }
+            }
+
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                pdfTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            }
+
+            document.add(pdfTable);
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "Exported successfully to " + filePath);
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error exporting to PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 }

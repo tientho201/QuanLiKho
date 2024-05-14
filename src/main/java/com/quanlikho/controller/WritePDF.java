@@ -191,4 +191,78 @@ public class WritePDF {
         }
 
     }
+    public void writePhieuNhap(String mapn , String nguoitao , String thoigiantao , String tongtien) {
+    	SanPhamBUS spBUS = new SanPhamBUS();
+    	if(spBUS.getList() == null) spBUS.list();
+    	ChiTietPhieuNhapBUS ctpnBUS = new ChiTietPhieuNhapBUS();
+    	if(ctpnBUS.getList() == null) ctpnBUS.list();
+        String url = "";
+        try {
+            fd.setTitle("In phiếu Nhập");
+            fd.setLocationRelativeTo(null);
+            url = getFile(mapn);
+            if (url == null) {
+                return;
+            }
+            file = new FileOutputStream(url);
+            document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, file);
+            document.open();
+
+            setTitle("THÔNG TIN PHIẾU NHẬP");
+
+
+
+            Paragraph para1 = new Paragraph(new Phrase("Mã phiếu: " + mapn, fontData));
+            Paragraph para2 = new Paragraph(new Phrase("Thời gian tạo: " + thoigiantao, fontData));
+            Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + nguoitao, fontData));
+            para1.setIndentationLeft(40);
+            para2.setIndentationLeft(40);
+            para3.setIndentationLeft(40);
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
+
+            //Tao table cho cac chi tiet cua hoa don
+            PdfPTable pdfTable = new PdfPTable(3);
+            pdfTable.setWidths(new float[]{10f, 10f, 10f});
+            PdfPCell cell;
+
+            //Set headers cho table chi tiet
+            pdfTable.addCell(new PdfPCell(new Phrase("Mã sản phẩm", fontHeader)));
+         
+            pdfTable.addCell(new PdfPCell(new Phrase("Số lượng", fontHeader)));
+          
+            pdfTable.addCell(new PdfPCell(new Phrase("Thành tiền", fontHeader)));
+
+            for (int i = 0; i < 3; i++) {
+                cell = new PdfPCell(new Phrase(""));
+                pdfTable.addCell(cell);
+            }
+
+            //Truyen thong tin tung chi tiet vao table
+            for (ChiTietPhieuNhapDTO ctpn : ctpnBUS.getList()) {
+
+                
+                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getMaSP(), fontData)));
+                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getSoLuong())));
+        
+                pdfTable.addCell(new PdfPCell(new Phrase( ctpn.getDonGiaNhap()+ "đ", fontData)));
+           
+            }
+            document.add(pdfTable);
+            document.add(Chunk.NEWLINE);
+            Paragraph paraTongThanhToan = new Paragraph(new Phrase("Tổng thanh toán: " + tongtien + "đ", fontData));
+            paraTongThanhToan.setIndentationLeft(300);
+            document.add(paraTongThanhToan);
+            document.close();
+            JOptionPane.showMessageDialog(null, "Ghi file thành công: " + url);
+            openFile(url);
+
+        } catch (DocumentException | FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi ghi file " + url);
+        }
+
+    }
 }

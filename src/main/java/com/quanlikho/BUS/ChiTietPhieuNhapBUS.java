@@ -107,7 +107,14 @@ public class ChiTietPhieuNhapBUS {
 		}
 		return 0 ;
 	}
-
+	public String PutOnMaPNH(String MaPNH) {
+		for (ChiTietPhieuNhapDTO ctpn : ds) {
+			if (ctpn.getMaPNH().equals(MaPNH)) {
+				return ctpn.getMaPNH();
+			}
+		}
+		return null ;
+	}
 	public ArrayList<ChiTietPhieuNhapDTO> getByMaPN(String MaPNH) {
 		ArrayList<ChiTietPhieuNhapDTO> result = new ArrayList<>();
 		for (ChiTietPhieuNhapDTO ctpn : ds) {

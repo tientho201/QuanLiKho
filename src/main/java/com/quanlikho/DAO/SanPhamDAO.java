@@ -108,20 +108,36 @@ public class SanPhamDAO {
 
 	
 	public boolean checkDataIsReferenced(String maSP) {
-		String CHECK_REFERENCED_QUERY = "SELECT COUNT(*) FROM ChiTietPN WHERE MaSP = ? UNION SELECT COUNT(*) FROM ChiTietPX WHERE MaSP = ?";
+	    String CHECK_REFERENCED_QUERY_PN = "SELECT COUNT(*) FROM ChiTietPN WHERE MaSP = ?";
+	    String CHECK_REFERENCED_QUERY_PX = "SELECT COUNT(*) FROM ChiTietPX WHERE MaSP = ?";
+	    
 	    try (Connection connection = connectJDBC.getConnection();
-	            PreparedStatement statement = connection.prepareStatement(CHECK_REFERENCED_QUERY)) {
-	        statement.setString(1, maSP);
-	        statement.setString(2, maSP); // Thêm tham số để kết nối với bảng PhieuXuat
-	        ResultSet resultSet = statement.executeQuery();
-	        if (resultSet.next()) {
-	            int count = resultSet.getInt(1);
-	            return count > 0; // Trả về true nếu có dữ liệu tham chiếu, ngược lại trả về false
+	            PreparedStatement statementPN = connection.prepareStatement(CHECK_REFERENCED_QUERY_PN);
+	            PreparedStatement statementPX = connection.prepareStatement(CHECK_REFERENCED_QUERY_PX)) {
+	        
+	        statementPN.setString(1, maSP);
+	        ResultSet resultSetPN = statementPN.executeQuery();
+	        if (resultSetPN.next()) {
+	            int countPN = resultSetPN.getInt(1);
+	            if (countPN > 0) {
+	                return true; // Trả về true nếu có dữ liệu tham chiếu trong ChiTietPN
+	            }
 	        }
+
+	        statementPX.setString(1, maSP);
+	        ResultSet resultSetPX = statementPX.executeQuery();
+	        if (resultSetPX.next()) {
+	            int countPX = resultSetPX.getInt(1);
+	            if (countPX > 0) {
+	                return true; // Trả về true nếu có dữ liệu tham chiếu trong ChiTietPX
+	            }
+	        }
+
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return false; // Trong trường hợp có lỗi xảy ra
+	    
+	    return false; // Trong trường hợp không có dữ liệu tham chiếu từ cả hai bảng
 	}
 
 }
