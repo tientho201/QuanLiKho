@@ -267,8 +267,13 @@ public class XuatHang extends JPanel {
 					}
 					String maSP = (String) rowData[0];
 					int soLuong = soLuongData(maSP);
+					
 					int enteredQuantity = Integer.parseInt(text_SL.getText());
-		
+				
+					if(enteredQuantity < 0 ) {
+						JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						return ; 
+					}
 					rowData[2] = text_SL.getText();
 					long unitPrice = (long) rowData[3];
 					long totalPrice = unitPrice * enteredQuantity;
@@ -319,15 +324,19 @@ public class XuatHang extends JPanel {
 					String maSP = (String) table_1.getValueAt(selectedRowIndex, 1); // Assuming product code is in the second column
 					long unitPrice = getUnitPriceFromDatabase(maSP);
 					String newQuantityStr = JOptionPane.showInputDialog(XuatHang.this, "Xuất số lượng mới:", "Sửa số lượng", JOptionPane.PLAIN_MESSAGE);
-					if (newQuantityStr != null && !newQuantityStr.isEmpty()) {
+					System.out.println(newQuantityStr);
+					if (newQuantityStr != null && !newQuantityStr.isEmpty() && Integer.parseInt(newQuantityStr) > 0 ) {
 						try {
 							int newQuantity = Integer.parseInt(newQuantityStr);
 							table_1.setValueAt(newQuantity, selectedRowIndex, 3); 
 							long newTotalPrice = unitPrice * newQuantity;
 							table_1.setValueAt(newTotalPrice, selectedRowIndex, 4); // Assuming total price is in the fifth column
+							
 						} catch (NumberFormatException ex) {
 							JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 						}
+					}else {
+						JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
