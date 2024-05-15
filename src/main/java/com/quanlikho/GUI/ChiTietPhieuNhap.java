@@ -204,7 +204,7 @@ public class ChiTietPhieuNhap extends JFrame {
 		btnNewPDF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 WritePDF writepdf = new WritePDF();
-			       writepdf.writePhieuNhap(lblNewLabeMaPN.getText(), lblNewLabelNguoiTao.getText() ,lblNewLabelNgayTao.getText()  , lblNewLabelTongTien.getText());
+			       writepdf.writePhieuNhap(lblNewLabeMaPN.getText(), lblNewLabelNguoiTao.getText() ,lblNewLabelNgayTao.getText()  , lblNewLabelTongTien.getText(), lblNewLabelNCC.getText());
 			}
 		});
 		btnNewPDF.setIcon(new ImageIcon(ChiTietPhieuNhap.class.getResource("/com/quanlikho/Item/pdf.png")));

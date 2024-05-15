@@ -191,11 +191,12 @@ public class WritePDF {
         }
 
     }
-    public void writePhieuNhap(String mapn , String nguoitao , String thoigiantao , String tongtien) {
+    public void writePhieuNhap(String mapn , String nguoitao , String thoigiantao , String tongtien , String mancc) {
     	SanPhamBUS spBUS = new SanPhamBUS();
     	if(spBUS.getList() == null) spBUS.list();
     	ChiTietPhieuNhapBUS ctpnBUS = new ChiTietPhieuNhapBUS();
     	if(ctpnBUS.getList() == null) ctpnBUS.list();
+    
         String url = "";
         try {
             fd.setTitle("In phiếu Nhập");
@@ -216,12 +217,15 @@ public class WritePDF {
             Paragraph para1 = new Paragraph(new Phrase("Mã phiếu: " + mapn, fontData));
             Paragraph para2 = new Paragraph(new Phrase("Thời gian tạo: " + thoigiantao, fontData));
             Paragraph para3 = new Paragraph(new Phrase("Người tạo: " + nguoitao, fontData));
+            Paragraph para4 = new Paragraph(new Phrase("Nhà cung cấp: " + mancc, fontData));
             para1.setIndentationLeft(40);
             para2.setIndentationLeft(40);
             para3.setIndentationLeft(40);
+            para4.setIndentationLeft(40);
             document.add(para1);
             document.add(para2);
             document.add(para3);
+            document.add(para4);
             document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
 
             //Tao table cho cac chi tiet cua hoa don
@@ -243,13 +247,13 @@ public class WritePDF {
 
             //Truyen thong tin tung chi tiet vao table
             for (ChiTietPhieuNhapDTO ctpn : ctpnBUS.getList()) {
-
-                
-                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getMaSP(), fontData)));
-                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getSoLuong())));
-        
-                pdfTable.addCell(new PdfPCell(new Phrase( ctpn.getDonGiaNhap()+ "đ", fontData)));
-           
+            	System.out.println(ctpn.getMaPNH());
+            	System.out.println(mapn);
+            	if(ctpn.getMaPNH().equals(mapn)) {
+            		pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getMaSP(), fontData)));
+            		pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getSoLuong()+ "", fontData)));
+            		pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getDonGiaNhap()+ "đ", fontData)));	
+            	}
             }
             document.add(pdfTable);
             document.add(Chunk.NEWLINE);
