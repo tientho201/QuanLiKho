@@ -270,7 +270,11 @@ public class XuatHang extends JPanel {
 					
 					int enteredQuantity = Integer.parseInt(text_SL.getText());
 				
-					if(enteredQuantity < 0 ) {
+					if(enteredQuantity < 0  ) {
+						JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						return ; 
+					}
+					if(enteredQuantity > soLuong  ) {
 						JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 						return ; 
 					}
@@ -317,47 +321,82 @@ public class XuatHang extends JPanel {
 		
 		
 		btnNewButton_4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selectedRowIndex = table_1.getSelectedRow();
-				if (selectedRowIndex != -1) {
-					String maSP = (String) table_1.getValueAt(selectedRowIndex, 1); // Assuming product code is in the second column
-					long unitPrice = getUnitPriceFromDatabase(maSP);
-					String newQuantityStr = JOptionPane.showInputDialog(XuatHang.this, "Xuất số lượng mới:", "Sửa số lượng", JOptionPane.PLAIN_MESSAGE);
-					System.out.println(newQuantityStr);
-					if (newQuantityStr != null && !newQuantityStr.isEmpty() && Integer.parseInt(newQuantityStr) > 0 ) {
-						try {
-							int newQuantity = Integer.parseInt(newQuantityStr);
-							table_1.setValueAt(newQuantity, selectedRowIndex, 3); 
-							long newTotalPrice = unitPrice * newQuantity;
-							table_1.setValueAt(newTotalPrice, selectedRowIndex, 4); // Assuming total price is in the fifth column
-							
-						} catch (NumberFormatException ex) {
-							JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-						}
-					}else {
-						JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        int selectedRowIndex = table_1.getSelectedRow();
+		        if (selectedRowIndex != -1) {
+		            Object[] rowData = new Object[table.getColumnCount()];
+		            for (int i = 0; i < table.getColumnCount(); i++) {
+		                rowData[i] = table.getValueAt(selectedRowIndex, i);
+		            }
+		            String maSP = (String) table_1.getValueAt(selectedRowIndex, 1); // Assuming product code is in the second column
+		            long unitPrice = getUnitPriceFromDatabase(maSP);
+		            int enteredQuantity = Integer.parseInt(text_SL.getText());
+		            int soLuong = soLuongData(maSP);
+		            String newQuantityStr = JOptionPane.showInputDialog(XuatHang.this, "Xuất số lượng mới:", "Sửa số lượng", JOptionPane.PLAIN_MESSAGE);
+		    
+		            if (newQuantityStr != null && !newQuantityStr.isEmpty()) {
+		                try {
+		                    int newQuantity = Integer.parseInt(newQuantityStr);
+		                    if (newQuantity > 0 && newQuantity <= soLuong) {
+		                        long newTotalPrice = unitPrice * newQuantity;
+		                        // Kiểm tra xem sản phẩm đã tồn tại trong table_1 chưa
+		                        boolean productExists = false;
+		                        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		                        for (int i = 0; i < model.getRowCount(); i++) {
+		                            if (model.getValueAt(i, 1).equals(maSP)) { // Kiểm tra mã sản phẩm
+		                                // Nếu sản phẩm đã tồn tại, chỉ cập nhật số lượng và thành tiền
+		                                model.setValueAt(newQuantity, i, 3); // Cập nhật số lượng
+		                                model.setValueAt(newTotalPrice, i, 4); // Cập nhật thành tiền
+		                                productExists = true;
+		                                break;
+		                            }
+		                        }
+		                        if (!productExists) {
+		                            // Nếu sản phẩm chưa tồn tại, thêm mới vào table_1
+		                            Object[] newRowData = new Object[rowData.length];
+		                            newRowData[0] = currentSTT++;
+		                            System.arraycopy(rowData, 0, newRowData, 1, rowData.length);
+		                            newRowData[3] = newQuantity; // Số lượng mới
+		                            newRowData[4] = newTotalPrice; // Thành tiền mới
+		                            model.addRow(newRowData);
+		                        }
+		    
+		                        labThanhTien.setText(String.valueOf(calculateTotalPrice()));
+		                    } else {
+		                        JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		                    }
+		                } catch (NumberFormatException ex) {
+		                    JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		                }
+		            } else {
+		                JOptionPane.showMessageDialog(XuatHang.this, "Số lượng không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		            }
+		        }
+		    }
 		});
 
+
 		btnNewButton_5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRowIndex = table_1.getSelectedRow();
-                if (selectedRowIndex != -1) {
-                    // Hiển thị hộp thoại xác nhận
-                    int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
-                    if (option == JOptionPane.YES_OPTION) {
-                        // Xóa hàng được chọn trong table_1
-                        ((DefaultTableModel) table_1.getModel()).removeRow(selectedRowIndex);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(XuatHang.this, "Hãy chọn một sản phẩm để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        int selectedRowIndex = table_1.getSelectedRow();
+		        if (selectedRowIndex != -1) {
+		            // Hiển thị hộp thoại xác nhận
+		            int option = JOptionPane.showConfirmDialog(XuatHang.this, "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+		            if (option == JOptionPane.YES_OPTION) {
+		                // Xóa hàng được chọn trong table_1
+		                ((DefaultTableModel) table_1.getModel()).removeRow(selectedRowIndex);
+		                
+		                // Cập nhật lại tổng tiền sau khi xóa hàng
+		                labThanhTien.setText(String.valueOf(calculateTotalPrice()));
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(XuatHang.this, "Hãy chọn một sản phẩm để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+		        }
+		    }
+		});
+
 
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
